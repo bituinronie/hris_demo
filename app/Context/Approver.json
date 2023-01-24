@@ -1,0 +1,64 @@
+{
+    "modelName": "Approver",
+    "tableName": "approvers",
+    "entity": {
+        "leaves_1": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "leaves_2": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "leaves_3": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "ob_1": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "ob_2": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "ob_3": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "overtime_1": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "overtime_2": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "overtime_3": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Approver",
+    "controllerLocation": "SelfService",
+    "routePrefix": "approver",
+    "apiVersion": "0.3.2"
+}

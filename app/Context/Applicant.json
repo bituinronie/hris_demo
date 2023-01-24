@@ -1,0 +1,150 @@
+{
+    "modelName": "Applicant",
+    "tableName": "applicants",
+    "entity": {
+        "firstName": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "lastName": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "middleName": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "nameExtension": {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+
+        "civilStatus": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "birthdate": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "height": {
+            "definition": "double:3,2",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "gender": {
+            "definition": "enum:MALE,FEMALE",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+
+        "address": {
+            "definition": "longText",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "contactNumber": {
+            "definition": "string:25",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "email": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+
+        "currentPosition": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "employmentStatus": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "yearsInCurrentPosition": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+
+        "college": {
+            "definition": "arary",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+
+        "workExperience": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "training": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+
+        "positionTitle": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "vacantOnPositions": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "placeOfAssignment": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "dateOfPublication": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "positionEducation": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "positionTraining": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "positionExperience": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "positionEligibility": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Applicant",
+    "controllerLocation": "ApplicationMatrix",
+    "routePrefix": "applicant",
+    "apiVersion": "0.1.15"
+}

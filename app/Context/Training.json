@@ -1,0 +1,49 @@
+{
+    "modelName": "Training",
+    "tableName": "trainings",
+    "entity": {
+        "program": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "type_of_ld": {
+            "definition": "string:50",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "sponsored_by": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_foreign": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "conducted_by": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "description": {
+            "definition": "longText",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Training",
+    "controllerLocation": "TrainingManagement",
+    "routePrefix": "training",
+    "apiVersion": "0.4.1"
+}

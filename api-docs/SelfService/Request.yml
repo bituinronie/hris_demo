@@ -1,0 +1,1615 @@
+openapi: 3.0.0
+info:
+  title: 'HRMIS OTS API - Request'
+  version: 0.4.3
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: request (admin)
+    description: 'Everything about admin access request API'
+  -
+    name: request (portal)
+    description: 'Everything about portal access request API'
+  -
+    name: request (approver)
+    description: 'Everything about approver access request API'
+  -
+    name: request (token)
+    description: 'Everything about token access request API'
+  -
+    name: request (cron)
+    description: 'Everything about cron for request API'
+paths:
+  /request/search:
+    get:
+      summary: 'get employees list'
+      tags:
+        - request (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return ServiceRecord records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/search/{employeeId}/{requestId}:
+    get:
+      summary: 'get admin record'
+      tags:
+        - request (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: requestId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: request_type_id
+          schema:
+            type: integer
+          description: 'sort by request_type_id'
+        -
+          in: query
+          name: category
+          schema:
+            type: string
+            enum:
+              - LEAVES
+              - OB
+              - OVERTIME
+              - REQUEST
+          description: 'sort by category'
+        -
+          in: query
+          name: isNew
+          schema:
+            type: boolean
+          description: 'search value'
+        -
+          in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          description: 'sort by status'
+        -
+          in: query
+          name: month
+          schema:
+            type: string
+          description: 'sort by month'
+        -
+          in: query
+          name: year
+          schema:
+            type: string
+          description: 'sort by year'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return request records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/create/{employeeId}:
+    post:
+      summary: 'create admin record'
+      tags:
+        - request (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_type_id:
+                  type: integer
+                others_description:
+                  type: string
+                from:
+                  type: timestamp
+                to:
+                  type: timestamp
+                refDate:
+                  type: date
+                halfDay:
+                  type: string
+                  enum:
+                    - AM
+                    - PM
+                useSchedule:
+                  type: boolean
+                remarks:
+                  type: string
+                credit:
+                  type: decimal
+                proof_type:
+                  type: string
+                proof:
+                  type: file
+                ob_venue:
+                  type: string
+                is_start:
+                  type: boolean
+              required:
+                - request_type_id
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/update/{requestId}:
+    post:
+      summary: 'update admin record'
+      tags:
+        - request (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_type_id:
+                  type: integer
+                from:
+                  type: timestamp
+                to:
+                  type: timestamp
+                remarks:
+                  type: string
+                credit:
+                  type: decimal
+                proof_type:
+                  type: string
+                proof:
+                  type: file
+                ob_venue:
+                  type: string
+                is_start:
+                  type: boolean
+              required:
+                - request_type_id
+                - from
+                - to
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/compute/{employeeId}:
+    post:
+      summary: 'compute admin record'
+      tags:
+        - request (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_type_id:
+                  type: integer
+                from:
+                  type: timestamp
+                to:
+                  type: timestamp
+                refDate:
+                  type: date
+                halfDay:
+                  type: string
+                  enum:
+                    - AM
+                    - PM
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/cancel/{requestId}:
+    post:
+      summary: 'cancel admin record'
+      tags:
+        - request (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: requestId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/balance/{employeeId}:
+    get:
+      summary: 'get balance admin record'
+      tags:
+        - request (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/parameter/:
+    get:
+      summary: 'get parameter admin record'
+      tags:
+        - request (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/search/:
+    get:
+      summary: 'get portal record'
+      tags:
+        - request (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: request_type_id
+          schema:
+            type: integer
+          description: 'sort by request_type_id'
+        -
+          in: query
+          name: category
+          schema:
+            type: string
+            enum:
+              - LEAVES
+              - OB
+              - OVERTIME
+              - REQUEST
+          description: 'sort by category'
+        -
+          in: query
+          name: isNew
+          schema:
+            type: boolean
+          description: 'search value'
+        -
+          in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          description: 'sort by status'
+        -
+          in: query
+          name: month
+          schema:
+            type: string
+          description: 'sort by month'
+        -
+          in: query
+          name: year
+          schema:
+            type: string
+          description: 'sort by year'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return request records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/create/:
+    post:
+      summary: 'create portal record'
+      tags:
+        - request (portal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_type_id:
+                  type: integer
+                others_description:
+                  type: string
+                from:
+                  type: timestamp
+                to:
+                  type: timestamp
+                refDate:
+                  type: date
+                halfDay:
+                  type: string
+                  enum:
+                    - AM
+                    - PM
+                reason:
+                  type: string
+                proof_type:
+                  type: string
+                proof:
+                  type: file
+                ob_venue:
+                  type: string
+              required:
+                - request_type_id
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/proof/{requestId}:
+    post:
+      summary: 'attach proof on portal record'
+      tags:
+        - request (portal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                proof_type:
+                  type: string
+                proof:
+                  type: file
+              required:
+                - proof_type
+                - proof
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: requestId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/compute/:
+    post:
+      summary: 'compute portal record'
+      tags:
+        - request (portal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                request_type_id:
+                  type: integer
+                from:
+                  type: timestamp
+                to:
+                  type: timestamp
+                refDate:
+                  type: date
+                halfDay:
+                  type: string
+                  enum:
+                    - AM
+                    - PM
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/cancel/{requestId}:
+    post:
+      summary: 'cancel portal record'
+      tags:
+        - request (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: requestId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/balance/:
+    get:
+      summary: 'get balance portal record'
+      tags:
+        - request (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/portal/parameter/:
+    get:
+      summary: 'get parameter portal record'
+      tags:
+        - request (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/approver/search/:
+    get:
+      summary: 'get approver record'
+      tags:
+        - request (approver)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: request_type_id
+          schema:
+            type: integer
+          description: 'sort by request_type_id'
+        -
+          in: query
+          name: category
+          schema:
+            type: string
+            enum:
+              - LEAVES
+              - OB
+              - OVERTIME
+              - REQUEST
+          description: 'sort by category'
+        -
+          in: query
+          name: isNew
+          schema:
+            type: boolean
+          description: 'search value'
+        -
+          in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          description: 'sort by status'
+        -
+          in: query
+          name: month
+          schema:
+            type: string
+          description: 'sort by month'
+        -
+          in: query
+          name: year
+          schema:
+            type: string
+          description: 'sort by year'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'sort by dateFrom w/ dateTo'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return request records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    from: timestamp
+                    to: timestamp
+                    request_type_id: relatedTo
+                    credit: double
+                    ot_json: array
+                    status: integer
+                    reason: string
+                    proof_type: string
+                    ob_venue: string
+                    is_paid: boolean
+                    remarks: string
+                    is_start: boolean
+                    approverStatus: array
+                    created_at: '2021-05-17 15:26:34'
+                    updated_at: '2021-05-17 15:26:34'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request/approver/approve/{requestId}':
+    post:
+      summary: 'approve approver record'
+      tags:
+        - request (approver)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: requestId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'request update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request/approver/disapprove/{requestId}':
+    post:
+      summary: 'disapprove approver record'
+      tags:
+        - request (approver)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remarks:
+                  type: string
+              required:
+                - remarks
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: requestId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'request update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /request/approver/parameter/:
+    get:
+      summary: 'get parameter approver record'
+      tags:
+        - request (approver)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'request created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'request successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request/token/approve/{token}':
+    post:
+      summary: 'approve token record'
+      tags:
+        - request (token)
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: token
+          required: true
+          schema:
+            type: integer
+          description: 'generated token'
+      responses:
+        '"204"':
+          description: 'request update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request/token/disapprove/{token}':
+    post:
+      summary: 'disapprove approver record'
+      tags:
+        - request (token)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remarks:
+                  type: string
+              required:
+                - remarks
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: token
+          required: true
+          schema:
+            type: string
+          description: 'generated token'
+      responses:
+        '"204"':
+          description: 'request update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/generate/:
+    post:
+      summary: generate token
+      tags:
+        - request (token)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permission:
+                  type: string
+                model_name:
+                  type: array
+              example:
+                permission: "portal request"
+                model_name: {
+                  "requestId" : 1
+                }
+              required:
+                - permission
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "message": "<token>"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/check/{token}:
+    get:
+      summary: check token
+      tags:
+        - request (token)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: token to check
+      responses:
+        "204":
+          description: token is valid
+          content: null
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /cron/request/automatic:
+    post:
+      summary: 'cron request automatic'
+      tags:
+        - request (cron)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Dtr created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'dtr successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /cron/request/earn/{employeeId}:
+    post:
+      summary: 'cron request monthly earning'
+      tags:
+        - request (cron)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        '"201"':
+          description: 'Dtr created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'dtr successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /cron/request/annual:
+    post:
+      summary: 'cron request annual earning'
+      tags:
+        - request (cron)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Dtr created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'dtr successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

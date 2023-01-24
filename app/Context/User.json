@@ -1,0 +1,44 @@
+{
+    "modelName": "User",
+    "tableName": "users",
+    "entity": {
+        "username": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "email": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "password": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "isActive": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:1"]
+        },
+        "shouldChange": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:1"]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "User",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "user",
+    "apiVersion": "0.1.16"
+}

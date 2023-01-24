@@ -1,0 +1,480 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Schedule'
+  version: 0.2.1
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: schedule
+    description: 'Everything about Schedule API'
+paths:
+  /schedule/create:
+    post:
+      summary: 'create record'
+      tags:
+        - schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                description:
+                  type: string
+                mon_time_in:
+                  type: timestamp
+                mon_lunch_out:
+                  type: timestamp
+                mon_lunch_in:
+                  type: timestamp
+                mon_time_out:
+                  type: timestamp
+                tue_time_in:
+                  type: timestamp
+                tue_lunch_out:
+                  type: timestamp
+                tue_lunch_in:
+                  type: timestamp
+                tue_time_out:
+                  type: timestamp
+                wed_time_in:
+                  type: timestamp
+                wed_lunch_out:
+                  type: timestamp
+                wed_lunch_in:
+                  type: timestamp
+                wed_time_out:
+                  type: timestamp
+                thu_time_in:
+                  type: timestamp
+                thu_lunch_out:
+                  type: timestamp
+                thu_lunch_in:
+                  type: timestamp
+                thu_time_out:
+                  type: timestamp
+                fri_time_in:
+                  type: timestamp
+                fri_lunch_out:
+                  type: timestamp
+                fri_lunch_in:
+                  type: timestamp
+                fri_time_out:
+                  type: timestamp
+                sat_time_in:
+                  type: timestamp
+                sat_lunch_out:
+                  type: timestamp
+                sat_lunch_in:
+                  type: timestamp
+                sat_time_out:
+                  type: timestamp
+                sun_time_in:
+                  type: timestamp
+                sun_lunch_out:
+                  type: timestamp
+                sun_lunch_in:
+                  type: timestamp
+                sun_time_out:
+                  type: timestamp
+                flexi_from:
+                  type: timestamp
+                flexi_to:
+                  type: timestamp
+              required:
+                - code
+                - description
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Schedule created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'schedule successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/schedule/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - schedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Schedule records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    mon_time_in: timestamp
+                    mon_lunch_out: timestamp
+                    mon_lunch_in: timestamp
+                    mon_time_out: timestamp
+                    tue_time_in: timestamp
+                    tue_lunch_out: timestamp
+                    tue_lunch_in: timestamp
+                    tue_time_out: timestamp
+                    wed_time_in: timestamp
+                    wed_lunch_out: timestamp
+                    wed_lunch_in: timestamp
+                    wed_time_out: timestamp
+                    thu_time_in: timestamp
+                    thu_lunch_out: timestamp
+                    thu_lunch_in: timestamp
+                    thu_time_out: timestamp
+                    fri_time_in: timestamp
+                    fri_lunch_out: timestamp
+                    fri_lunch_in: timestamp
+                    fri_time_out: timestamp
+                    sat_time_in: timestamp
+                    sat_lunch_out: timestamp
+                    sat_lunch_in: timestamp
+                    sat_time_out: timestamp
+                    sun_time_in: timestamp
+                    sun_lunch_out: timestamp
+                    sun_lunch_in: timestamp
+                    sun_time_out: timestamp
+                    flexi_from: timestamp
+                    flexi_to: timestamp
+                    created_at: '2021-02-01 13:16:32'
+                    updated_at: '2021-02-01 13:16:32'
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    mon_time_in: timestamp
+                    mon_lunch_out: timestamp
+                    mon_lunch_in: timestamp
+                    mon_time_out: timestamp
+                    tue_time_in: timestamp
+                    tue_lunch_out: timestamp
+                    tue_lunch_in: timestamp
+                    tue_time_out: timestamp
+                    wed_time_in: timestamp
+                    wed_lunch_out: timestamp
+                    wed_lunch_in: timestamp
+                    wed_time_out: timestamp
+                    thu_time_in: timestamp
+                    thu_lunch_out: timestamp
+                    thu_lunch_in: timestamp
+                    thu_time_out: timestamp
+                    fri_time_in: timestamp
+                    fri_lunch_out: timestamp
+                    fri_lunch_in: timestamp
+                    fri_time_out: timestamp
+                    sat_time_in: timestamp
+                    sat_lunch_out: timestamp
+                    sat_lunch_in: timestamp
+                    sat_time_out: timestamp
+                    sun_time_in: timestamp
+                    sun_lunch_out: timestamp
+                    sun_lunch_in: timestamp
+                    sun_time_out: timestamp
+                    flexi_from: timestamp
+                    flexi_to: timestamp
+                    created_at: '2021-02-01 13:16:32'
+                    updated_at: '2021-02-01 13:16:32'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /schedule/parameter/:
+    get:
+      summary: 'get parameter'
+      tags:
+        - schedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/schedule/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                description:
+                  type: string
+                mon_time_in:
+                  type: timestamp
+                mon_lunch_out:
+                  type: timestamp
+                mon_lunch_in:
+                  type: timestamp
+                mon_time_out:
+                  type: timestamp
+                tue_time_in:
+                  type: timestamp
+                tue_lunch_out:
+                  type: timestamp
+                tue_lunch_in:
+                  type: timestamp
+                tue_time_out:
+                  type: timestamp
+                wed_time_in:
+                  type: timestamp
+                wed_lunch_out:
+                  type: timestamp
+                wed_lunch_in:
+                  type: timestamp
+                wed_time_out:
+                  type: timestamp
+                thu_time_in:
+                  type: timestamp
+                thu_lunch_out:
+                  type: timestamp
+                thu_lunch_in:
+                  type: timestamp
+                thu_time_out:
+                  type: timestamp
+                fri_time_in:
+                  type: timestamp
+                fri_lunch_out:
+                  type: timestamp
+                fri_lunch_in:
+                  type: timestamp
+                fri_time_out:
+                  type: timestamp
+                sat_time_in:
+                  type: timestamp
+                sat_lunch_out:
+                  type: timestamp
+                sat_lunch_in:
+                  type: timestamp
+                sat_time_out:
+                  type: timestamp
+                sun_time_in:
+                  type: timestamp
+                sun_lunch_out:
+                  type: timestamp
+                sun_lunch_in:
+                  type: timestamp
+                sun_time_out:
+                  type: timestamp
+                flexi_from:
+                  type: timestamp
+                flexi_to:
+                  type: timestamp
+              required:
+                - code
+                - description
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Schedule update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/schedule/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - schedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Schedule delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/schedule/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - schedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Schedule sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,29 @@
+{
+    "modelName": "EmploymentStatus",
+    "tableName": "employment_statuses",
+    "entity": {
+        "code": {
+            "definition": "string",
+            "additionalValidation": "unique:employment_statuses",
+            "additionalDefinition": ["unique"]
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Employment Status",
+    "controllerLocation": "History",
+    "routePrefix": "employment-status",
+    "apiVersion": "0.1.13"
+}

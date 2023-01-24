@@ -1,0 +1,199 @@
+{
+    "modelName": "Position",
+    "tableName": "positions",
+    "entity": {
+        "title": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "former_position": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "item_number": {
+            "definition": "string:30",
+            "additionalValidation": "unique:positions",
+            "additionalDefinition": ["nullable","unique"]
+        },
+        "salary_grade_id": {
+            "definition": "relatedTo:salary_grades",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "salary": {
+            "definition": "double:10,2",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "supervised_position_title": {
+            "definition": "longText",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "supervised_item_number": {
+            "definition": "longText",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "division_id": {
+            "definition": "relatedTo:divisions",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "place_of_work": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "supervisor_id": {
+            "definition": "relatedTo:positions",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_internal_executive": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_internal_supervisor": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_internal_non_supervisor": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_internal_staff": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_external_public": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_external_agencies": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "contact_external_others": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "office_work": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "field_work": {
+            "definition": "enum:OCCASIONAL,FREQUENT",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "other_work": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "general_function": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "job_summary": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "education": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "experience": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "training": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "eligibility": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "core_compentencies": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "core_competency_level": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "leadership_competencies": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "leadership_compentency_level": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "percentage_working_time": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "duties_responsibilities": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "duties_competency_level": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "equipments": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "classification": {
+            "definition": "enum:KEY,TECHNICAL,SUPPORT TO THE TECHNICAL,ADMINISTRATIVE",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "level": {
+            "definition": "enum:1ST,2ND,3RD",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Position",
+    "controllerLocation": "History",
+    "routePrefix": "position",
+    "apiVersion": "0.1.12"
+}

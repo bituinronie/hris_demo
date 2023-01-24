@@ -1,0 +1,293 @@
+openapi: 3.0.0
+info:
+  title: 'HRMIS OTS API - SpecialSchedule'
+  version: 0.2.4
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: specialschedule
+    description: 'Everything about SpecialSchedule API'
+paths:
+  /special-schedule/create:
+    post:
+      summary: 'create record'
+      tags:
+        - specialschedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                description:
+                  type: string
+                ref_date:
+                  type: date
+                template:
+                  type: array
+              required:
+                - code
+                - description
+                - ref_date
+                - template
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'SpecialSchedule created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'special-schedule successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-schedule/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - specialschedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: ref_date
+          schema:
+            type: date
+          description: 'format: Y-m-01'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return SpecialSchedule records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    ref_date: date
+                    template: array
+                    created_at: '2021-06-19 00:46:06'
+                    updated_at: '2021-06-19 00:46:06'
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    ref_date: date
+                    template: array
+                    created_at: '2021-06-19 00:46:06'
+                    updated_at: '2021-06-19 00:46:06'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-schedule/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - specialschedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                description:
+                  type: string
+                ref_date:
+                  type: date
+                template:
+                  type: array
+              required:
+                - code
+                - description
+                - ref_date
+                - template
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialSchedule update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-schedule/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - specialschedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialSchedule delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-schedule/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - specialschedule
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialSchedule sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

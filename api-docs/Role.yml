@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Role API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: roles
+    description: Everything about Role API's
+
+paths:
+  /role/search/{id}:
+    get:
+      summary: get role lists
+      tags:
+        - roles
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: Role id
+        - in: query
+          name: searchValue
+          schema:
+            type: string
+          description: search by name
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        - in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        "200":
+          description: listing roles
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  - "id": 1
+                    "name" : "Administrator"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /role/parameter/:
+    get:
+      summary: get role parameter
+      tags:
+        - roles
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: listing roles parameter
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  permissions : ['create sample', 'search sample']
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /role/create/:
+    post:
+      summary: create role
+      tags:
+        - roles
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                permissions:
+                  type: array
+              required:
+                - name
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "201":
+          description: successful message
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "message": "role successfully created."
+        "401":
+          description: Bearer not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /role/update/{id}:
+    put:
+      summary: update role
+      tags:
+        - roles
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                permissions:
+                  type: array
+              required:
+                - name
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Role id
+      responses:
+        "204":
+          description: successful message
+          content: null
+        "401":
+          description: Bearer not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,576 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Position'
+  version: 0.1.12
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: position
+    description: 'Everything about Position API'
+paths:
+  /position/create:
+    post:
+      summary: 'create record'
+      tags:
+        - position
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                former_position:
+                  type: string
+                item_number:
+                  type: string
+                place_of_work:
+                  type: string
+                salary_grade_id:
+                  type: integer
+                supervisor_id:
+                  type: integer
+                division_id:
+                  type: integer
+                classification:
+                  type: string
+                  enum:
+                    - KEY
+                    - TECHNICAL
+                    - 'SUPPORT TO THE TECHNICAL'
+                    - ADMINISTRATIVE
+                level:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - 3RD
+                employment_status_id:
+                  type: integer
+                supervised_position_title:
+                  type: string
+                supervised_item_number:
+                  type: string
+                contact_internal_executive:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_supervisor:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_non_supervisor:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_staff:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_public:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_agencies:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_others:
+                  type: string
+                office_work:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                field_work:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                other_work:
+                  type: string
+                general_function:
+                  type: text
+                job_summary:
+                  type: text
+                education:
+                  type: text
+                experience:
+                  type: text
+                training:
+                  type: text
+                eligibility:
+                  type: text
+                core_compentencies:
+                  type: text
+                core_competency_level:
+                  type: text
+                leadership_competencies:
+                  type: text
+                leadership_compentency_level:
+                  type: text
+                percentage_working_time:
+                  type: text
+                duties_responsibilities:
+                  type: text
+                duties_competency_level:
+                  type: text
+                equipments:
+                  type: array
+              required:
+                - title
+                - salary_grade_id
+                - division_id
+                - classification
+                - level
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Position created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'position successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/position/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - position
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return SalaryGrade parameter'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {'sample' : [1,2,3]}
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/position/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - position
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Position records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    title: string
+                    former_position: string
+                    item_number: string
+                    salary_grade_id: relatedTo
+                    salary: double
+                    supervised_position_title: longText
+                    supervised_item_number: longText
+                    division_id: relatedTo
+                    place_of_work: string
+                    supervisor_id: relatedTo
+                    contact_internal_executive: enum
+                    contact_internal_supervisor: enum
+                    contact_internal_non_supervisor: enum
+                    contact_internal_staff: enum
+                    contact_external_public: enum
+                    contact_external_agencies: enum
+                    contact_external_others: string
+                    office_work: enum
+                    field_work: enum
+                    other_work: string
+                    general_function: text
+                    job_summary: text
+                    education: text
+                    experience: text
+                    training: text
+                    eligibility: text
+                    core_compentencies: text
+                    core_competency_level: text
+                    leadership_competencies: text
+                    leadership_compentency_level: text
+                    percentage_working_time: text
+                    duties_responsibilities: text
+                    duties_competency_level: text
+                    equipments: array
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-12 15:36:53'
+                    updated_at: '2021-01-12 15:36:53'
+                  -
+                    id: 1
+                    title: string
+                    former_position: string
+                    item_number: string
+                    salary_grade_id: relatedTo
+                    salary: double
+                    supervised_position_title: longText
+                    supervised_item_number: longText
+                    division_id: relatedTo
+                    place_of_work: string
+                    supervisor_id: relatedTo
+                    contact_internal_executive: enum
+                    contact_internal_supervisor: enum
+                    contact_internal_non_supervisor: enum
+                    contact_internal_staff: enum
+                    contact_external_public: enum
+                    contact_external_agencies: enum
+                    contact_external_others: string
+                    office_work: enum
+                    field_work: enum
+                    other_work: string
+                    general_function: text
+                    job_summary: text
+                    education: text
+                    experience: text
+                    training: text
+                    eligibility: text
+                    core_compentencies: text
+                    core_competency_level: text
+                    leadership_competencies: text
+                    leadership_compentency_level: text
+                    percentage_working_time: text
+                    duties_responsibilities: text
+                    duties_competency_level: text
+                    equipments: array
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-12 15:36:53'
+                    updated_at: '2021-01-12 15:36:53'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/position/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - position
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                former_position:
+                  type: string
+                item_number:
+                  type: string
+                place_of_work:
+                  type: string
+                salary_grade_id:
+                  type: integer
+                supervisor_id:
+                  type: integer
+                division_id:
+                  type: integer
+                classification:
+                  type: string
+                  enum:
+                    - KEY
+                    - TECHNICAL
+                    - 'SUPPORT TO THE TECHNICAL'
+                    - ADMINISTRATIVE
+                level:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - 3RD
+                employment_status_id:
+                  type: integer
+                supervised_position_title:
+                  type: string
+                supervised_item_number:
+                  type: string
+                contact_internal_executive:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_supervisor:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_non_supervisor:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_internal_staff:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_public:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_agencies:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                contact_external_others:
+                  type: string
+                office_work:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                field_work:
+                  type: string
+                  enum:
+                    - OCCASIONAL
+                    - FREQUENT
+                other_work:
+                  type: string
+                general_function:
+                  type: text
+                job_summary:
+                  type: text
+                education:
+                  type: text
+                experience:
+                  type: text
+                training:
+                  type: text
+                eligibility:
+                  type: text
+                core_compentencies:
+                  type: text
+                core_competency_level:
+                  type: text
+                leadership_competencies:
+                  type: text
+                leadership_compentency_level:
+                  type: text
+                percentage_working_time:
+                  type: text
+                duties_responsibilities:
+                  type: text
+                duties_competency_level:
+                  type: text
+                equipments:
+                  type: array
+              required:
+                - title
+                - salary_grade_id
+                - division_id
+                - classification
+                - level
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Position update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/position/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - position
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Position delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/position/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - position
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Position sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

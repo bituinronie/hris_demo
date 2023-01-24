@@ -1,0 +1,44 @@
+{
+    "modelName": "Sample",
+    "tableName": "samples",
+    "entity": {
+        "fname": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "mname": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "lname": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "myHobbies": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "gender": {
+            "definition": "enum:MALE,FEMALE",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:MALE"]
+        }
+    },
+    "portalAccess" : {
+        "search" : false,
+        "update" : false,
+        "create" : false,
+        "delete" : false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting" : "default",
+    "logName" : "Sample",
+    "controllerLocation": null,
+    "routePrefix": "sample",
+    "apiVersion": "0.2.0"
+}

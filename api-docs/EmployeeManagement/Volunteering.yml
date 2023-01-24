@@ -1,0 +1,578 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Volunteering'
+  version: 0.1.7
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: volunteering
+    description: 'Everything about Volunteering API'
+paths:
+  /employee/volunteering/create/{employeeId}:
+    post:
+      summary: 'create record'
+      tags:
+        - volunteering
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                number_of_hours:
+                  type: string
+                position:
+                  type: string
+                nature_of_work:
+                  type: string
+              required:
+                - organization
+                - date_from
+                - number_of_hours
+                - position
+                - nature_of_work
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"201"':
+          description: 'Volunteering created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee/volunteering successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/volunteering/search/{employeeId}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Volunteering records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    organization: string
+                    date_from: string
+                    date_to: string
+                    number_of_hours: string
+                    position: string
+                    nature_of_work: string
+                    created_at: '2021-01-08 23:12:54'
+                    updated_at: '2021-01-08 23:12:54'
+                  -
+                    id: 1
+                    organization: string
+                    date_from: string
+                    date_to: string
+                    number_of_hours: string
+                    position: string
+                    nature_of_work: string
+                    created_at: '2021-01-08 23:12:54'
+                    updated_at: '2021-01-08 23:12:54'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/volunteering/parameter/':
+    get:
+      summary: 'get parameter'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/volunteering/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - volunteering
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                number_of_hours:
+                  type: string
+                position:
+                  type: string
+                nature_of_work:
+                  type: string
+              required:
+                - organization
+                - date_from
+                - number_of_hours
+                - position
+                - nature_of_work
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Volunteering update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/volunteering/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Volunteering update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/volunteering/portal/search/{id}:
+    get:
+      summary: 'get portal record'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Volunteering records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    organization: string
+                    date_from: string
+                    date_to: string
+                    number_of_hours: string
+                    position: string
+                    nature_of_work: string
+                    created_at: '2021-01-08 23:12:54'
+                    updated_at: '2021-01-08 23:12:54'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    organization: string
+                    date_from: string
+                    date_to: string
+                    number_of_hours: string
+                    position: string
+                    nature_of_work: string
+                    created_at: '2021-01-08 23:12:54'
+                    updated_at: '2021-01-08 23:12:54'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/volunteering/portal/create:
+    post:
+      summary: 'create record'
+      tags:
+        - volunteering
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                number_of_hours:
+                  type: string
+                position:
+                  type: string
+                nature_of_work:
+                  type: string
+              required:
+                - organization
+                - date_from
+                - number_of_hours
+                - position
+                - nature_of_work
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Volunteering created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee/volunteering successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/volunteering/portal/parameter/':
+    get:
+      summary: 'get portal parameter'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/volunteering/portal/update/{id}:
+    put:
+      summary: 'update portal record'
+      tags:
+        - volunteering
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                number_of_hours:
+                  type: string
+                position:
+                  type: string
+                nature_of_work:
+                  type: string
+              required:
+                - organization
+                - date_from
+                - number_of_hours
+                - position
+                - nature_of_work
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Volunteering update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/volunteering/portal/delete/{id}:
+    delete:
+      summary: 'delete portal record'
+      tags:
+        - volunteering
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Volunteering delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

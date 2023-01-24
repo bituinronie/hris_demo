@@ -1,0 +1,444 @@
+{
+    "modelName": "Employee",
+    "tableName": "employees",
+    "entity": {
+        "user_id": {
+            "definition": "relatedTo:users",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "employee_number": {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "last_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "first_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "middle_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "name_extension": {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "birth_date": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "birth_place": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "gender": {
+            "definition": "enum:MALE,FEMALE",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "civil_status": {
+            "definition": "enum:SINGLE,MARRIED,WIDOWED,SEPERATED,OTHERS",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "height": {
+            "definition": "double:3,2",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "weight": {
+            "definition": "double:5,2",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "blood_type": {
+            "definition": "enum:A+,A-,B+,B-,AB+,AB-,O+,O-",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "gsis": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "pagibig": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "philhealth": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sss": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "tin": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "citizenship": {
+            "definition": "enum:FILIPINO,DUAL_CITIZEN",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "citizenship_by": {
+            "definition": "enum:BIRTH,NATURALIZATION",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "citizenship_by_country": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_housenum": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_street": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_subdivision": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_barangay": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_city": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_province": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "residential_zipcode": {
+            "definition": "string:4",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_housenum": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_street": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_subdivision": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_barangay": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_city": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_province": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "permanent_zipcode": {
+            "definition": "string:4",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "telephone": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mobile": {
+            "definition": "string:20",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "email": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "spouse_last_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_first_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_middle_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_name_extension": {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_occupation": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_telephone": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_employer_business": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "spouse_business_address": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "father_last_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "father_first_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "father_middle_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "father_name_extension": {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mother_last_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mother_first_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mother_middle_name": {
+            "definition": "string:75",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_affiliated_third": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "affiliated_third": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_affiliated_fourth": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "affiliated_fourth": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_found_guilty": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "found_guilty": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_criminally_charged": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "criminally_charged_date": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "criminally_charged_status": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_convicted": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "convicted": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_separated_service": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "separated_service": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_candidate": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "candidate": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_resigned": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "resigned": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_immigrant": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "immigrant": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_indigenous": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "indigenous": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_disabled": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "disabled": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_solo": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "solo": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "government_id_type": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "government_id_number": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "issued_date": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "issued_place": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "memberships": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "recognitions": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "skills": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Employee",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee",
+    "apiVersion": "0.1.2"
+}

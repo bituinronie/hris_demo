@@ -1,0 +1,1425 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Employee'
+  version: 0.1.2
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: employee
+    description: 'Everything about Employee API'
+paths:
+  /employee/create:
+    post:
+      summary: 'create record'
+      tags:
+        - employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_number:
+                  type: string
+                last_name:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                name_extension:
+                  type: string
+                birth_date:
+                  type: string
+                birth_place:
+                  type: string
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                civil_status:
+                  type: string
+                  enum:
+                    - SINGLE
+                    - MARRIED
+                    - WIDOWED
+                    - SEPERATED
+                    - OTHERS
+                height:
+                  type: number
+                weight:
+                  type: number
+                blood_type:
+                  type: string
+                  enum:
+                    - A+
+                    - A-
+                    - B+
+                    - B-
+                    - AB+
+                    - AB-
+                    - O+
+                    - O-
+                gsis:
+                  type: string
+                pagibig:
+                  type: string
+                philhealth:
+                  type: string
+                sss:
+                  type: string
+                tin:
+                  type: string
+                citizenship:
+                  type: string
+                  enum:
+                    - FILIPINO
+                    - DUAL_CITIZEN
+                citizenship_by:
+                  type: string
+                  enum:
+                    - BIRTH
+                    - NATURALIZATION
+                citizenship_by_country:
+                  type: string
+                residential_housenum:
+                  type: string
+                residential_street:
+                  type: string
+                residential_subdivision:
+                  type: string
+                residential_barangay:
+                  type: string
+                residential_city:
+                  type: string
+                residential_province:
+                  type: string
+                residential_zipcode:
+                  type: string
+                permanent_housenum:
+                  type: string
+                permanent_street:
+                  type: string
+                permanent_subdivision:
+                  type: string
+                permanent_barangay:
+                  type: string
+                permanent_city:
+                  type: string
+                permanent_province:
+                  type: string
+                permanent_zipcode:
+                  type: string
+                telephone:
+                  type: string
+                mobile:
+                  type: string
+                email:
+                  type: string
+                spouse_last_name:
+                  type: string
+                spouse_first_name:
+                  type: string
+                spouse_middle_name:
+                  type: string
+                spouse_name_extension:
+                  type: string
+                spouse_occupation:
+                  type: string
+                spouse_telephone:
+                  type: string
+                spouse_employer_business:
+                  type: string
+                spouse_business_address:
+                  type: string
+                father_last_name:
+                  type: string
+                father_first_name:
+                  type: string
+                father_middle_name:
+                  type: string
+                father_name_extension:
+                  type: string
+                mother_last_name:
+                  type: string
+                mother_first_name:
+                  type: string
+                mother_middle_name:
+                  type: string
+                is_affiliated_third:
+                  type: boolean
+                affiliated_third:
+                  type: text
+                is_affiliated_fourth:
+                  type: boolean
+                affiliated_fourth:
+                  type: text
+                is_found_guilty:
+                  type: boolean
+                found_guilty:
+                  type: text
+                is_criminally_charged:
+                  type: boolean
+                criminally_charged_date:
+                  type: string
+                criminally_charged_status:
+                  type: text
+                is_convicted:
+                  type: boolean
+                convicted:
+                  type: text
+                is_separated_service:
+                  type: boolean
+                separated_service:
+                  type: text
+                is_candidate:
+                  type: boolean
+                candidate:
+                  type: text
+                is_resigned:
+                  type: boolean
+                resigned:
+                  type: text
+                is_immigrant:
+                  type: boolean
+                immigrant:
+                  type: text
+                is_indigenous:
+                  type: boolean
+                indigenous:
+                  type: text
+                is_disabled:
+                  type: boolean
+                disabled:
+                  type: text
+                is_solo:
+                  type: boolean
+                solo:
+                  type: text
+                government_id_type:
+                  type: string
+                government_id_number:
+                  type: string
+                issued_date:
+                  type: string
+                issued_place:
+                  type: string
+                memberships:
+                  type: array
+                skills:
+                  type: array
+                recognitions:
+                  type: array
+              required:
+                - employee_number
+                - last_name
+                - first_name
+                - middle_name
+                - name_extension
+                - birth_date
+                - birth_place
+                - gender
+                - civil_status
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Employee created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Employee records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    user_id: relatedTo
+                    employee_number: string
+                    last_name: string
+                    first_name: string
+                    middle_name: string
+                    name_extension: string
+                    birth_date: string
+                    birth_place: string
+                    gender: enum
+                    civil_status: enum
+                    height: double
+                    weight: double
+                    blood_type: enum
+                    gsis: string
+                    pagibig: string
+                    philhealth: string
+                    sss: string
+                    tin: string
+                    citizenship: enum
+                    citizenship_by: enum
+                    citizenship_by_country: string
+                    residential_housenum: string
+                    residential_street: string
+                    residential_subdivision: string
+                    residential_barangay: string
+                    residential_city: string
+                    residential_province: string
+                    residential_zipcode: string
+                    permanent_housenum: string
+                    permanent_street: string
+                    permanent_subdivision: string
+                    permanent_barangay: string
+                    permanent_city: string
+                    permanent_province: string
+                    permanent_zipcode: string
+                    telephone: string
+                    mobile: string
+                    email: string
+                    spouse_last_name: string
+                    spouse_first_name: string
+                    spouse_middle_name: string
+                    spouse_name_extension: string
+                    spouse_occupation: string
+                    spouse_telephone: string
+                    spouse_employer_business: string
+                    spouse_business_address: string
+                    father_last_name: string
+                    father_first_name: string
+                    father_middle_name: string
+                    father_name_extension: string
+                    mother_last_name: string
+                    mother_first_name: string
+                    mother_middle_name: string
+                    is_affiliated_third: boolean
+                    affiliated_third: text
+                    is_affiliated_fourth: boolean
+                    affiliated_fourth: text
+                    is_found_guilty: boolean
+                    found_guilty: text
+                    is_criminally_charged: boolean
+                    criminally_charged_date: string
+                    criminally_charged_status: text
+                    is_convicted: boolean
+                    convicted: text
+                    is_separated_service: boolean
+                    separated_service: text
+                    is_candidate: boolean
+                    candidate: text
+                    is_resigned: boolean
+                    resigned: text
+                    is_immigrant: boolean
+                    immigrant: text
+                    is_indigenous: boolean
+                    indigenous: text
+                    is_disabled: boolean
+                    disabled: text
+                    is_solo: boolean
+                    solo: text
+                    government_id_type: string
+                    government_id_number: string
+                    issued_date: string
+                    issued_place: string
+                    created_at: '2021-01-07 12:09:47'
+                    updated_at: '2021-01-07 12:09:47'
+                  -
+                    id: 1
+                    user_id: relatedTo
+                    employee_number: string
+                    last_name: string
+                    first_name: string
+                    middle_name: string
+                    name_extension: string
+                    birth_date: string
+                    birth_place: string
+                    gender: enum
+                    civil_status: enum
+                    height: double
+                    weight: double
+                    blood_type: enum
+                    gsis: string
+                    pagibig: string
+                    philhealth: string
+                    sss: string
+                    tin: string
+                    citizenship: enum
+                    citizenship_by: enum
+                    citizenship_by_country: string
+                    residential_housenum: string
+                    residential_street: string
+                    residential_subdivision: string
+                    residential_barangay: string
+                    residential_city: string
+                    residential_province: string
+                    residential_zipcode: string
+                    permanent_housenum: string
+                    permanent_street: string
+                    permanent_subdivision: string
+                    permanent_barangay: string
+                    permanent_city: string
+                    permanent_province: string
+                    permanent_zipcode: string
+                    telephone: string
+                    mobile: string
+                    email: string
+                    spouse_last_name: string
+                    spouse_first_name: string
+                    spouse_middle_name: string
+                    spouse_name_extension: string
+                    spouse_occupation: string
+                    spouse_telephone: string
+                    spouse_employer_business: string
+                    spouse_business_address: string
+                    father_last_name: string
+                    father_first_name: string
+                    father_middle_name: string
+                    father_name_extension: string
+                    mother_last_name: string
+                    mother_first_name: string
+                    mother_middle_name: string
+                    is_affiliated_third: boolean
+                    affiliated_third: text
+                    is_affiliated_fourth: boolean
+                    affiliated_fourth: text
+                    is_found_guilty: boolean
+                    found_guilty: text
+                    is_criminally_charged: boolean
+                    criminally_charged_date: string
+                    criminally_charged_status: text
+                    is_convicted: boolean
+                    convicted: text
+                    is_separated_service: boolean
+                    separated_service: text
+                    is_candidate: boolean
+                    candidate: text
+                    is_resigned: boolean
+                    resigned: text
+                    is_immigrant: boolean
+                    immigrant: text
+                    is_indigenous: boolean
+                    indigenous: text
+                    is_disabled: boolean
+                    disabled: text
+                    is_solo: boolean
+                    solo: text
+                    government_id_type: string
+                    government_id_number: string
+                    issued_date: string
+                    issued_place: string
+                    created_at: '2021-01-07 12:09:47'
+                    updated_at: '2021-01-07 12:09:47'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/parameter/':
+    get:
+      summary: 'get parameter'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isResetPassword:
+                  type: boolean
+                employee_number:
+                  type: string
+                last_name:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                name_extension:
+                  type: string
+                birth_date:
+                  type: string
+                birth_place:
+                  type: string
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                civil_status:
+                  type: string
+                  enum:
+                    - SINGLE
+                    - MARRIED
+                    - WIDOWED
+                    - SEPERATED
+                    - OTHERS
+                height:
+                  type: number
+                weight:
+                  type: number
+                blood_type:
+                  type: string
+                  enum:
+                    - A+
+                    - A-
+                    - B+
+                    - B-
+                    - AB+
+                    - AB-
+                    - O+
+                    - O-
+                gsis:
+                  type: string
+                pagibig:
+                  type: string
+                philhealth:
+                  type: string
+                sss:
+                  type: string
+                tin:
+                  type: string
+                citizenship:
+                  type: string
+                  enum:
+                    - FILIPINO
+                    - DUAL_CITIZEN
+                citizenship_by:
+                  type: string
+                  enum:
+                    - BIRTH
+                    - NATURALIZATION
+                citizenship_by_country:
+                  type: string
+                residential_housenum:
+                  type: string
+                residential_street:
+                  type: string
+                residential_subdivision:
+                  type: string
+                residential_barangay:
+                  type: string
+                residential_city:
+                  type: string
+                residential_province:
+                  type: string
+                residential_zipcode:
+                  type: string
+                permanent_housenum:
+                  type: string
+                permanent_street:
+                  type: string
+                permanent_subdivision:
+                  type: string
+                permanent_barangay:
+                  type: string
+                permanent_city:
+                  type: string
+                permanent_province:
+                  type: string
+                permanent_zipcode:
+                  type: string
+                telephone:
+                  type: string
+                mobile:
+                  type: string
+                email:
+                  type: string
+                spouse_last_name:
+                  type: string
+                spouse_first_name:
+                  type: string
+                spouse_middle_name:
+                  type: string
+                spouse_name_extension:
+                  type: string
+                spouse_occupation:
+                  type: string
+                spouse_telephone:
+                  type: string
+                spouse_employer_business:
+                  type: string
+                spouse_business_address:
+                  type: string
+                father_last_name:
+                  type: string
+                father_first_name:
+                  type: string
+                father_middle_name:
+                  type: string
+                father_name_extension:
+                  type: string
+                mother_last_name:
+                  type: string
+                mother_first_name:
+                  type: string
+                mother_middle_name:
+                  type: string
+                is_affiliated_third:
+                  type: boolean
+                affiliated_third:
+                  type: text
+                is_affiliated_fourth:
+                  type: boolean
+                affiliated_fourth:
+                  type: text
+                is_found_guilty:
+                  type: boolean
+                found_guilty:
+                  type: text
+                is_criminally_charged:
+                  type: boolean
+                criminally_charged_date:
+                  type: string
+                criminally_charged_status:
+                  type: text
+                is_convicted:
+                  type: boolean
+                convicted:
+                  type: text
+                is_separated_service:
+                  type: boolean
+                separated_service:
+                  type: text
+                is_candidate:
+                  type: boolean
+                candidate:
+                  type: text
+                is_resigned:
+                  type: boolean
+                resigned:
+                  type: text
+                is_immigrant:
+                  type: boolean
+                immigrant:
+                  type: text
+                is_indigenous:
+                  type: boolean
+                indigenous:
+                  type: text
+                is_disabled:
+                  type: boolean
+                disabled:
+                  type: text
+                is_solo:
+                  type: boolean
+                solo:
+                  type: text
+                government_id_type:
+                  type: string
+                government_id_number:
+                  type: string
+                issued_date:
+                  type: string
+                issued_place:
+                  type: string
+                memberships:
+                  type: array
+                skills:
+                  type: array
+                recognitions:
+                  type: array
+              required:
+                - isResetPassword
+                - employee_number
+                - last_name
+                - first_name
+                - middle_name
+                - name_extension
+                - birth_date
+                - birth_place
+                - gender
+                - civil_status
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Employee update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Employee update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Employee sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/dp/search/{id}:
+    get:
+      summary: 'get dp'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"200"':
+          description: 'return Employee records'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: 
+                  message: "<url>"
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/dp/change/{id}:
+    post:
+      summary: 'change dp'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                picture:
+                  type: string
+                  format: binary
+      responses:
+        '"204"':
+          description: 'success response'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/portal/search/:
+    get:
+      summary: 'get portal record'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Employee records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    user_id: relatedTo
+                    employee_number: string
+                    last_name: string
+                    first_name: string
+                    middle_name: string
+                    name_extension: string
+                    birth_date: string
+                    birth_place: string
+                    gender: enum
+                    civil_status: enum
+                    height: double
+                    weight: double
+                    blood_type: enum
+                    gsis: string
+                    pagibig: string
+                    philhealth: string
+                    sss: string
+                    tin: string
+                    citizenship: enum
+                    citizenship_by: enum
+                    citizenship_by_country: string
+                    residential_housenum: string
+                    residential_street: string
+                    residential_subdivision: string
+                    residential_barangay: string
+                    residential_city: string
+                    residential_province: string
+                    residential_zipcode: string
+                    permanent_housenum: string
+                    permanent_street: string
+                    permanent_subdivision: string
+                    permanent_barangay: string
+                    permanent_city: string
+                    permanent_province: string
+                    permanent_zipcode: string
+                    telephone: string
+                    mobile: string
+                    email: string
+                    spouse_last_name: string
+                    spouse_first_name: string
+                    spouse_middle_name: string
+                    spouse_name_extension: string
+                    spouse_occupation: string
+                    spouse_telephone: string
+                    spouse_employer_business: string
+                    spouse_business_address: string
+                    father_last_name: string
+                    father_first_name: string
+                    father_middle_name: string
+                    father_name_extension: string
+                    mother_last_name: string
+                    mother_first_name: string
+                    mother_middle_name: string
+                    is_affiliated_third: boolean
+                    affiliated_third: text
+                    is_affiliated_fourth: boolean
+                    affiliated_fourth: text
+                    is_found_guilty: boolean
+                    found_guilty: text
+                    is_criminally_charged: boolean
+                    criminally_charged_date: string
+                    criminally_charged_status: text
+                    is_convicted: boolean
+                    convicted: text
+                    is_separated_service: boolean
+                    separated_service: text
+                    is_candidate: boolean
+                    candidate: text
+                    is_resigned: boolean
+                    resigned: text
+                    is_immigrant: boolean
+                    immigrant: text
+                    is_indigenous: boolean
+                    indigenous: text
+                    is_disabled: boolean
+                    disabled: text
+                    is_solo: boolean
+                    solo: text
+                    government_id_type: string
+                    government_id_number: string
+                    issued_date: string
+                    issued_place: string
+                    created_at: '2021-01-07 12:09:47'
+                    updated_at: '2021-01-07 12:09:47'
+                  -
+                    id: 1
+                    user_id: relatedTo
+                    employee_number: string
+                    last_name: string
+                    first_name: string
+                    middle_name: string
+                    name_extension: string
+                    birth_date: string
+                    birth_place: string
+                    gender: enum
+                    civil_status: enum
+                    height: double
+                    weight: double
+                    blood_type: enum
+                    gsis: string
+                    pagibig: string
+                    philhealth: string
+                    sss: string
+                    tin: string
+                    citizenship: enum
+                    citizenship_by: enum
+                    citizenship_by_country: string
+                    residential_housenum: string
+                    residential_street: string
+                    residential_subdivision: string
+                    residential_barangay: string
+                    residential_city: string
+                    residential_province: string
+                    residential_zipcode: string
+                    permanent_housenum: string
+                    permanent_street: string
+                    permanent_subdivision: string
+                    permanent_barangay: string
+                    permanent_city: string
+                    permanent_province: string
+                    permanent_zipcode: string
+                    telephone: string
+                    mobile: string
+                    email: string
+                    spouse_last_name: string
+                    spouse_first_name: string
+                    spouse_middle_name: string
+                    spouse_name_extension: string
+                    spouse_occupation: string
+                    spouse_telephone: string
+                    spouse_employer_business: string
+                    spouse_business_address: string
+                    father_last_name: string
+                    father_first_name: string
+                    father_middle_name: string
+                    father_name_extension: string
+                    mother_last_name: string
+                    mother_first_name: string
+                    mother_middle_name: string
+                    is_affiliated_third: boolean
+                    affiliated_third: text
+                    is_affiliated_fourth: boolean
+                    affiliated_fourth: text
+                    is_found_guilty: boolean
+                    found_guilty: text
+                    is_criminally_charged: boolean
+                    criminally_charged_date: string
+                    criminally_charged_status: text
+                    is_convicted: boolean
+                    convicted: text
+                    is_separated_service: boolean
+                    separated_service: text
+                    is_candidate: boolean
+                    candidate: text
+                    is_resigned: boolean
+                    resigned: text
+                    is_immigrant: boolean
+                    immigrant: text
+                    is_indigenous: boolean
+                    indigenous: text
+                    is_disabled: boolean
+                    disabled: text
+                    is_solo: boolean
+                    solo: text
+                    government_id_type: string
+                    government_id_number: string
+                    issued_date: string
+                    issued_place: string
+                    created_at: '2021-01-07 12:09:47'
+                    updated_at: '2021-01-07 12:09:47'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/portal/parameter/':
+    get:
+      summary: 'get portal parameter'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/portal/update/:
+    put:
+      summary: 'update portal record'
+      tags:
+        - employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_number:
+                  type: string
+                last_name:
+                  type: string
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                name_extension:
+                  type: string
+                birth_date:
+                  type: string
+                birth_place:
+                  type: string
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                civil_status:
+                  type: string
+                  enum:
+                    - SINGLE
+                    - MARRIED
+                    - WIDOWED
+                    - SEPERATED
+                    - OTHERS
+                height:
+                  type: number
+                weight:
+                  type: number
+                blood_type:
+                  type: string
+                  enum:
+                    - A+
+                    - A-
+                    - B+
+                    - B-
+                    - AB+
+                    - AB-
+                    - O+
+                    - O-
+                gsis:
+                  type: string
+                pagibig:
+                  type: string
+                philhealth:
+                  type: string
+                sss:
+                  type: string
+                tin:
+                  type: string
+                citizenship:
+                  type: string
+                  enum:
+                    - FILIPINO
+                    - DUAL_CITIZEN
+                citizenship_by:
+                  type: string
+                  enum:
+                    - BIRTH
+                    - NATURALIZATION
+                citizenship_by_country:
+                  type: string
+                residential_housenum:
+                  type: string
+                residential_street:
+                  type: string
+                residential_subdivision:
+                  type: string
+                residential_barangay:
+                  type: string
+                residential_city:
+                  type: string
+                residential_province:
+                  type: string
+                residential_zipcode:
+                  type: string
+                permanent_housenum:
+                  type: string
+                permanent_street:
+                  type: string
+                permanent_subdivision:
+                  type: string
+                permanent_barangay:
+                  type: string
+                permanent_city:
+                  type: string
+                permanent_province:
+                  type: string
+                permanent_zipcode:
+                  type: string
+                telephone:
+                  type: string
+                mobile:
+                  type: string
+                email:
+                  type: string
+                spouse_last_name:
+                  type: string
+                spouse_first_name:
+                  type: string
+                spouse_middle_name:
+                  type: string
+                spouse_name_extension:
+                  type: string
+                spouse_occupation:
+                  type: string
+                spouse_telephone:
+                  type: string
+                spouse_employer_business:
+                  type: string
+                spouse_business_address:
+                  type: string
+                father_last_name:
+                  type: string
+                father_first_name:
+                  type: string
+                father_middle_name:
+                  type: string
+                father_name_extension:
+                  type: string
+                mother_last_name:
+                  type: string
+                mother_first_name:
+                  type: string
+                mother_middle_name:
+                  type: string
+                is_affiliated_third:
+                  type: boolean
+                affiliated_third:
+                  type: text
+                is_affiliated_fourth:
+                  type: boolean
+                affiliated_fourth:
+                  type: text
+                is_found_guilty:
+                  type: boolean
+                found_guilty:
+                  type: text
+                is_criminally_charged:
+                  type: boolean
+                criminally_charged_date:
+                  type: string
+                criminally_charged_status:
+                  type: text
+                is_convicted:
+                  type: boolean
+                convicted:
+                  type: text
+                is_separated_service:
+                  type: boolean
+                separated_service:
+                  type: text
+                is_candidate:
+                  type: boolean
+                candidate:
+                  type: text
+                is_resigned:
+                  type: boolean
+                resigned:
+                  type: text
+                is_immigrant:
+                  type: boolean
+                immigrant:
+                  type: text
+                is_indigenous:
+                  type: boolean
+                indigenous:
+                  type: text
+                is_disabled:
+                  type: boolean
+                disabled:
+                  type: text
+                is_solo:
+                  type: boolean
+                solo:
+                  type: text
+                government_id_type:
+                  type: string
+                government_id_number:
+                  type: string
+                issued_date:
+                  type: string
+                issued_place:
+                  type: string
+                memberships:
+                  type: array
+                skills:
+                  type: array
+                recognitions:
+                  type: array
+              required:
+                - employee_number
+                - last_name
+                - first_name
+                - middle_name
+                - name_extension
+                - birth_date
+                - birth_place
+                - gender
+                - civil_status
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"204"':
+          description: 'Employee update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/portal/dp/search/:
+    get:
+      summary: 'get portal dp'
+      tags:
+        - employee
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Employee records'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: 
+                  message: "<url>"
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,54 @@
+{
+    "modelName": "Volunteering",
+    "tableName": "volunteerings",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "organization": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_from": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_to": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "number_of_hours": {
+            "definition": "string:1000",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "position": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "nature_of_work": {
+            "definition": "string:100",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Volunteering",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee/volunteering",
+    "apiVersion": "0.1.7"
+}

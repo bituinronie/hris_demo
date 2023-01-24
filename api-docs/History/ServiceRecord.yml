@@ -1,0 +1,821 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - ServiceRecord'
+  version: 0.1.15
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: servicerecord
+    description: 'Everything about ServiceRecord API'
+paths:
+  /service-record/create/{employeeId}:
+    post:
+      summary: 'create record'
+      tags:
+        - servicerecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                employee_group_id:
+                  type: integer
+                position_id:
+                  type: integer
+                positionOnPrint:
+                  type: string
+                salary:
+                  type: number
+                assigned_to:
+                  type: integer
+                divisionOnPrint:
+                  type: string
+                assigned_supervisor:
+                  type: integer
+                supervisorOnPrint:
+                  type: string
+                date_seperation:
+                  type: string
+                cause:
+                  type: string
+                employment_status_id:
+                  type: integer
+                remark_id:
+                  type: integer
+                awol_at:
+                  type: object
+                show_in_reports:
+                  type: boolean
+                is_uniformed:
+                  type: boolean
+                cancellation_reason:
+                  type: text
+                is_exempted:
+                  type: boolean
+                date_hired:
+                  type: boolean
+                place_of_work:
+                  type: string
+                is_wfh:
+                  type: boolean
+                classification:
+                  type: string
+                  enum:
+                    - KEY
+                    - TECHNICAL
+                    - 'SUPPORT TO THE TECHNICAL'
+                    - ADMINISTRATIVE
+                level:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - 3RD
+              required:
+                - date_from
+                - employee_group_id
+                - salary
+                - employment_status_id
+                - show_in_reports
+                - is_exempted
+                - date_hired
+                - is_wfh
+                - classification
+                - level
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"201"':
+          description: 'ServiceRecord created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'service-record successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /service-record/attach/{serviceRecordId}:
+    post:
+      summary: 'attach record'
+      tags:
+        - servicerecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attachment:
+                  type: file
+              required:
+                - attachment
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"204"':
+          description: 'ServiceRecord attachment message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/latest/{employeeId}':
+    get:
+      summary: 'get latest record'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"200"':
+          description: 'return ServiceRecord records'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  employee_id: relatedTo
+                  date_from: string
+                  date_to: string
+                  employee_group_id: relatedTo
+                  position_id: relatedTo
+                  position: string
+                  salary: double
+                  assigned_to: relatedTo
+                  division: string
+                  assigned_supervisor: relatedTo
+                  supervisor: string
+                  date_seperation: string
+                  cause: string
+                  employment_status_id: relatedTo
+                  remark_id: relatedTo
+                  awol_at: string
+                  show_in_reports: boolean
+                  is_uniformed: boolean
+                  cancellation_reason: text
+                  is_exempted: boolean
+                  date_hired: boolean
+                  place_of_work: string
+                  is_wfh: boolean
+                  classification: enum
+                  level: enum
+                  created_at: '2021-01-13 12:30:38'
+                  updated_at: '2021-01-13 12:30:38'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/search':
+    get:
+      summary: 'get employees list'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return ServiceRecord records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Service Record parameter'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {'sample' : [1,2,3]}
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/parameter/position':
+    get:
+      summary: 'get position parameter'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Service Record position parameter'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {'sample' : [1,2,3]}
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/parameter/step/{positionId}':
+    get:
+      summary: 'get position steps parameter'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: posiitionId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"200"':
+          description: 'return Service Record position parameter'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {'sample' : [1,2,3]}
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/search/{employeeId}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return ServiceRecord records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date_from: string
+                    date_to: string
+                    employee_group_id: relatedTo
+                    position_id: relatedTo
+                    position: string
+                    salary: double
+                    assigned_to: relatedTo
+                    division: string
+                    assigned_supervisor: relatedTo
+                    supervisor: string
+                    date_seperation: string
+                    cause: string
+                    employment_status_id: relatedTo
+                    remark_id: relatedTo
+                    awol_at: string
+                    show_in_reports: boolean
+                    is_uniformed: boolean
+                    cancellation_reason: text
+                    is_exempted: boolean
+                    date_hired: boolean
+                    place_of_work: string
+                    is_wfh: boolean
+                    classification: enum
+                    level: enum
+                    created_at: '2021-01-13 12:30:38'
+                    updated_at: '2021-01-13 12:30:38'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - servicerecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                employee_group_id:
+                  type: integer
+                position_id:
+                  type: integer
+                positionOnPrint:
+                  type: string
+                salary:
+                  type: number
+                assigned_to:
+                  type: integer
+                divisionOnPrint:
+                  type: string
+                assigned_supervisor:
+                  type: integer
+                supervisorOnPrint:
+                  type: string
+                date_seperation:
+                  type: string
+                cause:
+                  type: string
+                employment_status_id:
+                  type: integer
+                remark_id:
+                  type: integer
+                awol_at:
+                  type: object
+                show_in_reports:
+                  type: boolean
+                is_uniformed:
+                  type: boolean
+                cancellation_reason:
+                  type: text
+                is_exempted:
+                  type: boolean
+                date_hired:
+                  type: boolean
+                place_of_work:
+                  type: string
+                is_wfh:
+                  type: boolean
+                classification:
+                  type: string
+                  enum:
+                    - KEY
+                    - TECHNICAL
+                    - 'SUPPORT TO THE TECHNICAL'
+                    - ADMINISTRATIVE
+                level:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - 3RD
+              required:
+                - date_from
+                - employee_group_id
+                - salary
+                - employment_status_id
+                - show_in_reports
+                - is_exempted
+                - date_hired
+                - is_wfh
+                - classification
+                - level
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'ServiceRecord update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'ServiceRecord delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/service-record/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - servicerecord
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'ServiceRecord sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,926 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Training'
+  version: 0.4.1
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: training (admin)
+    description: 'Everything about Training Admin API'
+  -
+    name: training (date)
+    description: 'Everything about Training Dates API'
+  -
+    name: training (portal)
+    description: 'Everything about Training Portal API'
+paths:
+  /training/create:
+    post:
+      summary: 'create record'
+      tags:
+        - training (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                program:
+                  type: string
+                date_from:
+                  type: date
+                date_to:
+                  type: date
+                number_of_hours:
+                  type: integer
+                type_of_ld:
+                  type: string
+                sponsored_by:
+                  type: text
+                conducted_by:
+                  type: string
+                location:
+                  type: string
+                  enum:
+                    - LOCAL
+                    - FOREIGN
+                description:
+                  type: longText
+              required:
+                - program
+                - date_from
+                - date_to
+                - number_of_hours
+                - type_of_ld
+                - sponsored_by
+                - conducted_by
+                - location
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Training created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'training successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/search/{trainingId}':
+    get:
+      summary: 'get record'
+      tags:
+        - training (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - training (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/update/{trainingId}':
+    put:
+      summary: 'update record'
+      tags:
+        - training (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                program:
+                  type: string
+                type_of_ld:
+                  type: string
+                sponsored_by:
+                  type: text
+                conducted_by:
+                  type: string
+                location:
+                  type: string
+                  enum:
+                    - LOCAL
+                    - FOREIGN
+                description:
+                  type: longText
+              required:
+                - program
+                - type_of_ld
+                - sponsored_by
+                - conducted_by
+                - location
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Training update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/delete/{trainingId}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - training (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Training update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/restore/{trainingId}':
+    post:
+      summary: 'restore record'
+      tags:
+        - training (admin)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Training sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/date/search/{trainingId}':
+    get:
+      summary: 'get record'
+      tags:
+        - training (date)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: date_from
+          schema:
+            type: date
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+        -
+          in: query
+          name: date_to
+          schema:
+            type: date
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+        -
+          in: query
+          name: number_of_hours
+          schema:
+            type: integer
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/date/parameter/{trainingId}':
+    get:
+      summary: 'get employee parameter'
+      tags:
+        - training (date)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: date_from
+          required: true
+          schema:
+            type: date
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+        -
+          in: query
+          name: date_to
+          required: true
+          schema:
+            type: date
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+        -
+          in: query
+          name: number_of_hours
+          required: true
+          schema:
+            type: integer
+          description: 'get a single record (link to: date_from,date_to,number_of_hours)'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /training/date/create/{trainingId}:
+    post:
+      summary: 'create record'
+      tags:
+        - training (date)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_from:
+                  type: date
+                date_to:
+                  type: date
+                number_of_hours:
+                  type: integer
+              required:
+                - date_from
+                - date_to
+                - number_of_hours
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'Training created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'training successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /training/date/assign/{trainingId}:
+    post:
+      summary: 'assign record'
+      tags:
+        - training (date)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_ids:
+                  type: array
+                date_from:
+                  type: date
+                date_to:
+                  type: date
+                number_of_hours:
+                  type: integer
+              required:
+                - employee_ids
+                - date_from
+                - date_to
+                - number_of_hours
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"201"':
+          description: 'Training created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'training successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/date/update/{trainingId}':
+    put:
+      summary: 'update record'
+      tags:
+        - training (date)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_from:
+                  type: date
+                date_to:
+                  type: date
+                number_of_hours:
+                  type: integer
+                updated_date_from:
+                  type: date
+                updated_date_to:
+                  type: date
+                updated_number_of_hours:
+                  type: integer
+              required:
+                - date_from
+                - date_to
+                - number_of_hours
+                - updated_date_from
+                - updated_date_to
+                - updated_number_of_hours
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: trainingId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Training update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/training/date/delete/{trainingId}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - training (portal)
+      security:
+        -
+          bearerAuth: {  }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_from:
+                  type: date
+                date_to:
+                  type: date
+                number_of_hours:
+                  type: integer
+              required:
+                - date_from
+                - date_to
+                - number_of_hours
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Training update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /training/portal/calendar/{employeeTrainingId}:
+    get:
+      summary: 'get calendar'
+      tags:
+        - training (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /training/portal/search/:
+    get:
+      summary: 'get record'
+      tags:
+        - training (portal)
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Training records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+                  -
+                    id: 1
+                    program: string
+                    type_of_ld: string
+                    sponsored_by: text
+                    is_foreign: boolean
+                    conducted_by: string
+                    description: longText
+                    created_at: '2021-01-08 23:31:48'
+                    updated_at: '2021-01-08 23:31:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /training/portal/attach/{employeeTrainingId}:
+    post:
+      summary: 'attach proof record'
+      tags:
+        - training (portal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                certificate_of_appearance:
+                  type: file
+                post_training_report:
+                  type: file
+              required:
+                - certificate_of_appearance
+                - post_training_report
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"204"':
+          description: 'Training update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

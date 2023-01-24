@@ -1,0 +1,59 @@
+{
+    "modelName": "SpecialDate",
+    "tableName": "special_dates",
+    "entity": {
+        "reference_date": {
+            "definition": "date",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "reference_time": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "type": {
+            "definition": "enum:SPECIAL,LEGAL,SUSPENSION,FLAG_CEREMONY",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "employee_group_id": {
+            "definition": "relatedTo:employee_groups",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_fixed": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "is_required": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable","default:false"]
+        },
+        "use_description": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Special Date",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "special-date",
+    "apiVersion": "0.2.2"
+}

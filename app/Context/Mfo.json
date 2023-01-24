@@ -1,0 +1,62 @@
+{
+    "modelName": "Mfo",
+    "tableName": "mfos",
+    "entity": {
+        "appraisal_id": {
+            "definition": "relatedTo:appraisals",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "number": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "title": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "description": {
+            "definition": "longText",
+            "additionalValidation": "",
+            "additionalDefinition": [
+                "nullable"
+            ]
+        },
+        "Q": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": [
+                "nullable"
+            ]
+        },
+        "E": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": [
+                "nullable"
+            ]
+        },
+        "T": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": [
+                "nullable"
+            ]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:appraisals",
+    "logName": "Mfo",
+    "controllerLocation": "Labor",
+    "routePrefix": "mfo",
+    "apiVersion": "0.5.3"
+}

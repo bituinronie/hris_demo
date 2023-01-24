@@ -1,0 +1,29 @@
+{
+    "modelName": "EmployeeGroup",
+    "tableName": "employee_groups",
+    "entity": {
+        "code": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Employee Group",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee-group",
+    "apiVersion": "0.1.1"
+}

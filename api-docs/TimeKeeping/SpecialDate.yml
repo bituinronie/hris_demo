@@ -1,0 +1,327 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - SpecialDate'
+  version: 0.2.2
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: specialdate
+    description: 'Everything about SpecialDate API'
+paths:
+  /special-date/create:
+    post:
+      summary: 'create record'
+      tags:
+        - specialdate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reference_date:
+                  type: date
+                reference_time:
+                  type: time
+                type:
+                  type: string
+                  enum:
+                    - SPECIAL
+                    - LEGAL
+                    - SUSPENSION
+                    - FLAG_CEREMONY
+                description:
+                  type: string
+                employee_group_id:
+                  type: integer
+                is_fixed:
+                  type: boolean
+                is_required:
+                  type: boolean
+                use_description:
+                  type: boolean
+              required:
+                - reference_date
+                - type
+                - is_fixed
+                - use_description
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'SpecialDate created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'special-date successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-date/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - specialdate
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: year
+          schema:
+            type: string
+          description: 'sort by year default if null set to current year'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return SpecialDate records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    reference_date: date
+                    reference_time: time
+                    type: enum
+                    description: string
+                    employee_group_id: relatedTo
+                    is_fixed: boolean
+                    is_required: boolean
+                    use_description: boolean
+                    created_at: '2021-02-01 14:39:24'
+                    updated_at: '2021-02-01 14:39:24'
+                  -
+                    id: 1
+                    reference_date: date
+                    reference_time: time
+                    type: enum
+                    description: string
+                    employee_group_id: relatedTo
+                    is_fixed: boolean
+                    is_required: boolean
+                    use_description: boolean
+                    created_at: '2021-02-01 14:39:24'
+                    updated_at: '2021-02-01 14:39:24'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-date/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - specialdate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reference_date:
+                  type: date
+                reference_time:
+                  type: time
+                type:
+                  type: string
+                  enum:
+                    - SPECIAL
+                    - LEGAL
+                    - SUSPENSION
+                    - FLAG_CEREMONY
+                description:
+                  type: string
+                employee_group_id:
+                  type: integer
+                is_fixed:
+                  type: boolean
+                is_required:
+                  type: boolean
+                use_description:
+                  type: boolean
+              required:
+                - reference_date
+                - type
+                - is_fixed
+                - use_description
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialDate update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-date/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - specialdate
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialDate delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/special-date/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - specialdate
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SpecialDate sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

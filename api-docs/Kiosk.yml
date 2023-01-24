@@ -1,0 +1,495 @@
+openapi: 3.0.0
+info:
+  title: Kiosk API
+  version: 0.2.6
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: kiosk
+    description: Everything about Kiosk
+paths:
+  /kiosk/get-token/:
+    post:
+      summary: get token
+      tags:
+        - kiosk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            string:
+              schema:
+                type: string
+                example: "<bearer token>"
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: password not match
+  /kiosk/test-token/:
+    get:
+      summary: test token
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            string:
+              schema:
+                type: string
+                example: valid
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/logout-token/:
+    post:
+      summary: logout token
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "204":
+          description: logout success
+          content: null
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /kiosk/time-log/save/:
+    post:
+      summary: save time log
+      tags:
+        - kiosk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_id:
+                  type: integer
+                ref_date:
+                  type: date
+                post_date:
+                  type: datetime
+                type:
+                  type: integer
+                  enum:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                uploaded:
+                  type: boolean
+              required:
+                - employee_id
+                - ref_date
+                - post_date
+                - type
+                - uploaded
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "201":
+          description: logout success
+          content:
+            string:
+              schema:
+                type: string
+                example: "Time Logs and DTR successfully saved!"
+        "202":
+          description: logout success
+          content:
+            string:
+              schema:
+                type: string
+                example: "Time Logs and DTR is already saved!"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /kiosk/dtr/{employeeId}:
+    get:
+      summary: get dtr
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dtr:
+                    type: array
+                    example: []
+                  event:
+                    type: string
+                    example: "TIME_IN"
+                  timeLog:
+                    type: string
+                    example: "{datetime}"
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/employee/search/{employeeId}:
+    get:
+      summary: search employee
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee:
+                    type: object
+                    example: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/employee:
+    get:
+      summary: get all employee
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: array
+                properties: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/employee-schedule/{employeeId}:
+    get:
+      summary: get 3 day employee schedule
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee:
+                    type: object
+                    example: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/schedule/{employeeId}:
+    get:
+      summary: get all employee schedule
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee:
+                    type: object
+                    example: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/monthly-schedule/{employeeId}:
+    get:
+      summary: get all monthly employee schedule
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee:
+                    type: object
+                    example: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid
+  /kiosk/register/:
+    post:
+      summary: register employee
+      tags:
+        - kiosk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_id:
+                  type: integer
+                rfid:
+                  type: string
+                template1:
+                  type: blob
+                template1_number:
+                  type: integer
+                template2:
+                  type: blob
+                template2_number:
+                  type: integer
+                finger_mask:
+                  type: integer
+                face_template:
+                  type: blob
+              required:
+                - employee_id
+                - rfid
+                - template1
+                - template1_number
+                - template2
+                - template2_number
+                - finger_mask
+                - face_template
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "201":
+          description: message
+          content:
+            string:
+              schema:
+                type: string
+                example: "Time Logs and DTR successfully saved!"
+        "202":
+          description: logout success
+          content:
+            string:
+              schema:
+                type: string
+                example: "Time Logs and DTR is already saved!"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /kiosk/employee/rfid/{rfid}:
+    get:
+      summary: get employee by rfid
+      tags:
+        - kiosk
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        -
+          in: path
+          name: rfid
+          required: true
+          schema:
+            type: integer
+          description: 'RFID'
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee:
+                    type: object
+                    example: []
+        "401":
+          description: Bearer token not authorized
+          content:
+            string:
+              schema:
+                type: string
+                properties:
+                    type: string
+                    example: invalid

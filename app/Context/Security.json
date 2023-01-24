@@ -1,0 +1,59 @@
+{
+    "modelName": "Security",
+    "tableName": "securities",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "rfid" : {
+            "definition": "string:10",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "template1" : {
+            "definition": "binary",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "template1_number" : {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "template2" : {
+            "definition": "binary",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "template2_number" : {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "finger_mask" : {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "face_template" : {
+            "definition": "binary",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Security",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "security",
+    "apiVersion": "0.2.6"
+}

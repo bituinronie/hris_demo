@@ -1,0 +1,39 @@
+{
+    "modelName": "SalaryGrade",
+    "tableName": "salary_grades",
+    "entity": {
+        "salary_grade": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "tranche": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "step": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "salary": {
+            "definition": "double:10,2",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Salary Grade",
+    "controllerLocation": "History",
+    "routePrefix": "salary-grade",
+    "apiVersion": "0.1.11"
+}

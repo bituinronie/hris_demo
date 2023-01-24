@@ -1,0 +1,144 @@
+{
+    "modelName": "ServiceRecord",
+    "tableName": "service_records",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_from": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_to": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "employee_group_id": {
+            "definition": "relatedTo:employee_groups",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "position_id": {
+            "definition": "relatedTo:positions",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "position": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "salary": {
+            "definition": "double:10,2",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "assigned_to": {
+            "definition": "relatedTo:divisions",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "division": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "assigned_supervisor": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "supervisor": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "date_seperation": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "cause": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "employment_status_id": {
+            "definition": "relatedTo:employment_statuses",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "remark_id": {
+            "definition": "relatedTo:remarks",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "awol_at": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "show_in_reports": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "is_uniformed": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "cancellation_reason": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_exempted": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "date_hired": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "place_of_work": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_wfh": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "classification": {
+            "definition": "enum:KEY,TECHNICAL,SUPPORT TO THE TECHNICAL,ADMINISTRATIVE",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "level": {
+            "definition": "enum:1ST,2ND,3RD",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "assignTo:employees",
+    "logName": "Service Record",
+    "controllerLocation": "History",
+    "routePrefix": "service-record",
+    "apiVersion": "0.1.15"
+}

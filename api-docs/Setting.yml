@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Setting API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: setting
+    description: Everything about Setting API
+
+paths:
+  /setting/{key}:
+    get:
+      summary: get setting value
+      tags:
+        - setting
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Setting Key
+      responses:
+        "200":
+          description: listing activity logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: '<setting value>'
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+    put:
+      summary: update setting value
+      tags:
+        - setting
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+              required:
+                - string
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Setting Key
+      responses:
+        "204":
+          description: listing activity logs
+          content: null
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

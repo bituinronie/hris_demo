@@ -1,0 +1,39 @@
+{
+    "modelName": "Reference",
+    "tableName": "references",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "name": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "address": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "telephone": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Reference",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee/reference",
+    "apiVersion": "0.1.9"
+}

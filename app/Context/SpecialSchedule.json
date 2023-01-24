@@ -1,0 +1,39 @@
+{
+    "modelName": "SpecialSchedule",
+    "tableName": "special_schedules",
+    "entity": {
+        "code": {
+            "definition": "string:50",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "description": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "ref_date": {
+            "definition": "date",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "template": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Special Schedule",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "special-schedule",
+    "apiVersion": "0.2.4"
+}

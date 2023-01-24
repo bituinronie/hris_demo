@@ -1,0 +1,324 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - SalaryGrade'
+  version: 0.1.11
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: salarygrade
+    description: 'Everything about SalaryGrade API'
+paths:
+  /salary-grade/create/{tranche}:
+    post:
+      summary: 'create record'
+      tags:
+        - salarygrade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salary_grade:
+                  type: integer
+                step:
+                  type: integer
+                salary:
+                  type: number
+              required:
+                - salary_grade
+                - step
+                - salary
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: tranche
+          required: false
+          schema:
+            type: integer
+          description: salary grade tranche
+      responses:
+        '"201"':
+          description: 'SalaryGrade created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'salary-grade successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/salary-grade/search/{tranche}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - salarygrade
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: tranche
+          required: true
+          schema:
+            type: integer
+          description: salary grade tranche
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return SalaryGrade records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    salary_grade: integer
+                    tranche: integer
+                    step: integer
+                    salary: double
+                    created_at: '2021-01-12 13:34:32'
+                    updated_at: '2021-01-12 13:34:32'
+                  -
+                    id: 1
+                    salary_grade: integer
+                    tranche: integer
+                    step: integer
+                    salary: double
+                    created_at: '2021-01-12 13:34:32'
+                    updated_at: '2021-01-12 13:34:32'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/salary-grade/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - salarygrade
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return SalaryGrade parameter'
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {'tranche' : [1,2,3]}
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/salary-grade/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - salarygrade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salary_grade:
+                  type: integer
+                step:
+                  type: integer
+                salary:
+                  type: number
+              required:
+                - salary_grade
+                - step
+                - salary
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SalaryGrade update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/salary-grade/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - salarygrade
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SalaryGrade delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/salary-grade/restore/{id}':
+    post:
+      summary: 'restore record'
+      tags:
+        - salarygrade
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'SalaryGrade sucessfully restored'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

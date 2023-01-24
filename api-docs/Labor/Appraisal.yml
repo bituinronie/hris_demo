@@ -1,0 +1,602 @@
+openapi: 3.0.0
+info:
+  title: 'HRMIS OTS API - Appraisal'
+  version: 0.5.4
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: appraisal
+    description: 'Everything about Appraisal API'
+  -
+    name: mfo
+    description: 'Everything about Mfo API'
+paths:
+  '/appraisal/parameter/':
+    get:
+      summary: 'get parameter'
+      tags:
+        - appraisal
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/stats/{appraisalId}':
+    get:
+      summary: 'get stats'
+      tags:
+        - appraisal
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: appraisalId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"200"':
+          description: 'return stats'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /appraisal/create/{employeeId}:
+    post:
+      summary: 'create record'
+      tags:
+        - appraisal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                monthFrom:
+                  type: string
+                monthTo:
+                  type: string
+                remarks:
+                  type: string
+                semester:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - OTHERS
+              required:
+                - date
+                - semester
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"201"':
+          description: 'Appraisal created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'appraisal successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/search/{employeeId}/{appraisalId}':
+    get:
+      summary: 'get record'
+      tags:
+        - appraisal
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: path
+          name: appraisalId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: year
+          schema:
+            type: string
+          description: 'search by year'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Appraisal records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date: string
+                    semester: enum
+                    created_at: '2021-08-31 08:52:20'
+                    updated_at: '2021-08-31 08:52:20'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    date: string
+                    semester: enum
+                    created_at: '2021-08-31 08:52:20'
+                    updated_at: '2021-08-31 08:52:20'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/update/{appraisalId}':
+    put:
+      summary: 'update record'
+      tags:
+        - appraisal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                monthFrom:
+                  type: string
+                monthTo:
+                  type: string
+                remarks:
+                  type: string
+                semester:
+                  type: string
+                  enum:
+                    - 1ST
+                    - 2ND
+                    - OTHERS
+              required:
+                - date
+                - semester
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: appraisalId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Appraisal update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/delete/{appraisalId}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - appraisal
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: appraisalId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Appraisal delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/mfo/create/{appraisalId}':
+    post:
+      summary: 'create record'
+      tags:
+        - mfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: longText
+                Q:
+                  type: integer
+                E:
+                  type: integer
+                T:
+                  type: integer
+              required:
+                - number
+                - title
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: appraisalId
+          required: true
+          schema:
+            type: integer
+          description: appraisal id
+      responses:
+        '"201"':
+          description: 'Mfo created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'mfo successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/mfo/search/{appraisalId}/{mfoId}':
+    get:
+      summary: 'get record'
+      tags:
+        - mfo
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: appraisalId
+          required: false
+          schema:
+            type: integer
+          description: appraisal id
+        -
+          in: path
+          name: mfoId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+      responses:
+        '"200"':
+          description: 'return Mfo records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    appraisal_id: relatedTo
+                    number: string
+                    title: string
+                    description: longText
+                    Q: integer
+                    E: integer
+                    T: integer
+                    created_at: '2021-09-06 18:46:48'
+                    updated_at: '2021-09-06 18:46:48'
+                  -
+                    id: 1
+                    appraisal_id: relatedTo
+                    number: string
+                    title: string
+                    description: longText
+                    Q: integer
+                    E: integer
+                    T: integer
+                    created_at: '2021-09-06 18:46:48'
+                    updated_at: '2021-09-06 18:46:48'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/mfo/parameter/':
+    get:
+      summary: 'get parameter'
+      tags:
+        - mfo
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/mfo/update/{mfoId}':
+    put:
+      summary: 'update record'
+      tags:
+        - mfo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: longText
+                Q:
+                  type: integer
+                E:
+                  type: integer
+                T:
+                  type: integer
+              required:
+                - number
+                - title
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: mfoId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Mfo update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/appraisal/mfo/delete/{mfoId}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - mfo
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: mfoId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Mfo delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

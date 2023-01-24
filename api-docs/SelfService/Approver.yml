@@ -1,0 +1,289 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Approver'
+  version: 0.3.2
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: approver
+    description: 'Everything about Approver API'
+paths:
+  /approver/parameter/:
+    get:
+      summary: 'get parameter'
+      tags:
+        - approver
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/approver/search/{employeeId}':
+    get:
+      summary: 'get record'
+      tags:
+        - approver
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'employees id'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Approver records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    leaves_1: relatedTo
+                    leaves_2: relatedTo
+                    leaves_3: relatedTo
+                    ob_1: relatedTo
+                    ob_2: relatedTo
+                    ob_3: relatedTo
+                    overtime_1: relatedTo
+                    overtime_2: relatedTo
+                    overtime_3: relatedTo
+                    created_at: '2021-03-22 11:28:34'
+                    updated_at: '2021-03-22 11:28:34'
+                  -
+                    id: 1
+                    leaves_1: relatedTo
+                    leaves_2: relatedTo
+                    leaves_3: relatedTo
+                    ob_1: relatedTo
+                    ob_2: relatedTo
+                    ob_3: relatedTo
+                    overtime_1: relatedTo
+                    overtime_2: relatedTo
+                    overtime_3: relatedTo
+                    created_at: '2021-03-22 11:28:34'
+                    updated_at: '2021-03-22 11:28:34'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/approver/update/{employeeId}':
+    put:
+      summary: 'update record'
+      tags:
+        - approver
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                leaves_1:
+                  type: integer
+                leaves_2:
+                  type: integer
+                leaves_3:
+                  type: integer
+                ob_1:
+                  type: integer
+                ob_2:
+                  type: integer
+                ob_3:
+                  type: integer
+                overtime_1:
+                  type: integer
+                overtime_2:
+                  type: integer
+                overtime_3:
+                  type: integer
+                request_1:
+                  type: integer
+                request_2:
+                  type: integer
+                request_3:
+                  type: integer
+              required: {  }
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Approver update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/approver/mass/':
+    put:
+      summary: 'mass update record'
+      tags:
+        - approver
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employeeIds:
+                  type: array
+                leaves_1:
+                  type: integer
+                leaves_2:
+                  type: integer
+                leaves_3:
+                  type: integer
+                ob_1:
+                  type: integer
+                ob_2:
+                  type: integer
+                ob_3:
+                  type: integer
+                overtime_1:
+                  type: integer
+                overtime_2:
+                  type: integer
+                overtime_3:
+                  type: integer
+                request_1:
+                  type: integer
+                request_2:
+                  type: integer
+                request_3:
+                  type: integer
+              required:
+                - employeeIds
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Approver update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,64 @@
+{
+    "modelName": "RequestType",
+    "tableName": "request_types",
+    "entity": {
+        "code": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "filing_period_type": {
+            "definition": "enum:BEFORE,EITHER,AFTER,MONTH,ANYTIME",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "filing_period_month": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "filing_period_days": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "request_limit_min": {
+            "definition": "double",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "request_limit_max": {
+            "definition": "double",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "category": {
+            "definition": "enum:LEAVES,OB,OVERTIME",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "based_on": {
+            "definition": "enum:SCHEDULE,CALENDAR",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Request Type",
+    "controllerLocation": "SelfService",
+    "routePrefix": "request-type",
+    "apiVersion": "0.3.1"
+}

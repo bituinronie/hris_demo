@@ -1,0 +1,49 @@
+{
+    "modelName": "TimeLog",
+    "tableName": "time_logs",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "ref_date": {
+            "definition": "date",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "post_date": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "type": {
+            "definition": "enum:TIME_IN,LUNCH_OUT,LUNCH_IN,TIME_OUT",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "uploaded": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "name": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Time Log",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "time-log",
+    "apiVersion": "0.2.5"
+}

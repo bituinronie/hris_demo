@@ -1,0 +1,502 @@
+openapi: 3.0.0
+info:
+  title: 'HRMIS OTS API - Applicant'
+  version: 0.1.15
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: applicant
+    description: 'Everything about Applicant API'
+paths:
+  /applicant/create:
+    post:
+      summary: 'create record'
+      tags:
+        - applicant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                middleName:
+                  type: string
+                nameExtension:
+                  type: string
+                civilStatus:
+                  type: string
+                birthdate:
+                  type: string
+                height:
+                  type: number
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                address:
+                  type: longText
+                contactNumber:
+                  type: string
+                email:
+                  type: string
+                currentPosition:
+                  type: string
+                employmentStatus:
+                  type: string
+                yearsInCurrentPosition:
+                  type: string
+                college:
+                  type: arary
+                workExperience:
+                  type: array
+                training:
+                  type: array
+                positionTitle:
+                  type: string
+                vacantOnPositions:
+                  type: integer
+                placeOfAssignment:
+                  type: string
+                dateOfPublication:
+                  type: string
+                positionEducation:
+                  type: string
+                positionTraining:
+                  type: string
+                positionExperience:
+                  type: string
+                positionEligibility:
+                  type: string
+              required:
+                - firstName
+                - lastName
+                - middleName
+                - nameExtension
+                - civilStatus
+                - birthdate
+                - height
+                - gender
+                - address
+                - contactNumber
+                - email
+                - positionTitle
+                - vacantOnPositions
+                - placeOfAssignment
+                - positionEducation
+                - positionTraining
+                - positionExperience
+                - positionEligibility
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'Applicant created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'applicant successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/applicant/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - applicant
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return Applicant records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    firstName: string
+                    lastName: string
+                    middleName: string
+                    nameExtension: string
+                    civilStatus: string
+                    birthdate: string
+                    height: double
+                    gender: enum
+                    address: longText
+                    contactNumber: string
+                    email: string
+                    currentPosition: string
+                    employmentStatus: string
+                    yearsInCurrentPosition: string
+                    college: arary
+                    workExperience: array
+                    training: array
+                    positionTitle: string
+                    vacantOnPositions: integer
+                    placeOfAssignment: string
+                    dateOfPublication: string
+                    positionEducation: string
+                    positionTraining: string
+                    positionExperience: string
+                    positionEligibility: string
+                    created_at: '2021-07-09 10:53:31'
+                    updated_at: '2021-07-09 10:53:31'
+                  -
+                    id: 1
+                    firstName: string
+                    lastName: string
+                    middleName: string
+                    nameExtension: string
+                    civilStatus: string
+                    birthdate: string
+                    height: double
+                    gender: enum
+                    address: longText
+                    contactNumber: string
+                    email: string
+                    currentPosition: string
+                    employmentStatus: string
+                    yearsInCurrentPosition: string
+                    college: arary
+                    workExperience: array
+                    training: array
+                    positionTitle: string
+                    vacantOnPositions: integer
+                    placeOfAssignment: string
+                    dateOfPublication: string
+                    positionEducation: string
+                    positionTraining: string
+                    positionExperience: string
+                    positionEligibility: string
+                    created_at: '2021-07-09 10:53:31'
+                    updated_at: '2021-07-09 10:53:31'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/applicant/search/{applicantId}':
+    get:
+      summary: 'get record'
+      tags:
+        - applicant
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: applicantId
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Applicant records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    firstName: string
+                    lastName: string
+                    middleName: string
+                    nameExtension: string
+                    civilStatus: string
+                    birthdate: string
+                    height: double
+                    gender: enum
+                    address: longText
+                    contactNumber: string
+                    email: string
+                    currentPosition: string
+                    employmentStatus: string
+                    yearsInCurrentPosition: string
+                    college: arary
+                    workExperience: array
+                    training: array
+                    positionTitle: string
+                    vacantOnPositions: integer
+                    placeOfAssignment: string
+                    dateOfPublication: string
+                    positionEducation: string
+                    positionTraining: string
+                    positionExperience: string
+                    positionEligibility: string
+                    created_at: '2021-07-09 10:53:31'
+                    updated_at: '2021-07-09 10:53:31'
+                  -
+                    id: 1
+                    firstName: string
+                    lastName: string
+                    middleName: string
+                    nameExtension: string
+                    civilStatus: string
+                    birthdate: string
+                    height: double
+                    gender: enum
+                    address: longText
+                    contactNumber: string
+                    email: string
+                    currentPosition: string
+                    employmentStatus: string
+                    yearsInCurrentPosition: string
+                    college: arary
+                    workExperience: array
+                    training: array
+                    positionTitle: string
+                    vacantOnPositions: integer
+                    placeOfAssignment: string
+                    dateOfPublication: string
+                    positionEducation: string
+                    positionTraining: string
+                    positionExperience: string
+                    positionEligibility: string
+                    created_at: '2021-07-09 10:53:31'
+                    updated_at: '2021-07-09 10:53:31'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/applicant/update/{applicantId}':
+    put:
+      summary: 'update record'
+      tags:
+        - applicant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                middleName:
+                  type: string
+                nameExtension:
+                  type: string
+                civilStatus:
+                  type: string
+                birthdate:
+                  type: string
+                height:
+                  type: number
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                address:
+                  type: longText
+                contactNumber:
+                  type: string
+                email:
+                  type: string
+                currentPosition:
+                  type: string
+                employmentStatus:
+                  type: string
+                yearsInCurrentPosition:
+                  type: string
+                college:
+                  type: arary
+                workExperience:
+                  type: array
+                training:
+                  type: array
+                positionTitle:
+                  type: string
+                vacantOnPositions:
+                  type: integer
+                placeOfAssignment:
+                  type: string
+                dateOfPublication:
+                  type: string
+                positionEducation:
+                  type: string
+                positionTraining:
+                  type: string
+                positionExperience:
+                  type: string
+                positionEligibility:
+                  type: string
+              required:
+                - firstName
+                - lastName
+                - middleName
+                - nameExtension
+                - civilStatus
+                - birthdate
+                - height
+                - gender
+                - address
+                - contactNumber
+                - email
+                - positionTitle
+                - vacantOnPositions
+                - placeOfAssignment
+                - positionEducation
+                - positionTraining
+                - positionExperience
+                - positionEligibility
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: applicantId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Applicant update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/applicant/delete/{applicantId}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - applicant
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: applicantId
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Applicant delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

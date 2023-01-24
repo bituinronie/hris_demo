@@ -1,0 +1,39 @@
+{
+    "modelName": "Division",
+    "tableName": "divisions",
+    "entity": {
+        "code": {
+            "definition": "string:50",
+            "additionalValidation": "unique:divisions",
+            "additionalDefinition": ["unique"]
+        },
+        "name": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "description": {
+            "definition": "text",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "office_group": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Division",
+    "controllerLocation": "History",
+    "routePrefix": "division",
+    "apiVersion": "0.1.10"
+}

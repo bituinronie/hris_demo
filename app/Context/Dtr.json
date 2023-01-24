@@ -1,0 +1,54 @@
+{
+    "modelName": "Dtr",
+    "tableName": "dtrs",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "ref_date": {
+            "definition": "date",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "time_in": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "break_in": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "break_out": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "time_out": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "reason": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Dtr",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "dtr",
+    "apiVersion": "0.2.4"
+}

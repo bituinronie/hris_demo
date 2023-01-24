@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - RequestType'
+  version: 0.3.1
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: requesttype
+    description: 'Everything about RequestType API'
+paths:
+  '/request-type/search/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - requesttype
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return RequestType records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    filing_period_type: enum
+                    filing_period_month: array
+                    filing_period_days: integer
+                    request_limit_min: double
+                    request_limit_max: double
+                    category: enum
+                    based_on: enum
+                    created_at: '2021-03-02 12:25:35'
+                    updated_at: '2021-03-02 12:25:35'
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    filing_period_type: enum
+                    filing_period_month: array
+                    filing_period_days: integer
+                    request_limit_min: double
+                    request_limit_max: double
+                    category: enum
+                    based_on: enum
+                    created_at: '2021-03-02 12:25:35'
+                    updated_at: '2021-03-02 12:25:35'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request-type/parameter':
+    get:
+      summary: 'get parameter'
+      tags:
+        - requesttype
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return RequestType records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    filing_period_type: enum
+                    filing_period_month: array
+                    filing_period_days: integer
+                    request_limit_min: double
+                    request_limit_max: double
+                    category: enum
+                    based_on: enum
+                    created_at: '2021-03-02 12:25:35'
+                    updated_at: '2021-03-02 12:25:35'
+                  -
+                    id: 1
+                    code: string
+                    description: string
+                    filing_period_type: enum
+                    filing_period_month: array
+                    filing_period_days: integer
+                    request_limit_min: double
+                    request_limit_max: double
+                    category: enum
+                    based_on: enum
+                    created_at: '2021-03-02 12:25:35'
+                    updated_at: '2021-03-02 12:25:35'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/request-type/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - requesttype
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                description:
+                  type: string
+                filing_period_type:
+                  type: string
+                  enum:
+                    - BEFORE
+                    - EITHER
+                    - AFTER
+                    - MONTH
+                    - ANYTIME
+                filing_period_month:
+                  type: array
+                filing_period_days:
+                  type: integer
+                request_limit_min:
+                  type: number
+                request_limit_max:
+                  type: number
+                category:
+                  type: string
+                  enum:
+                    - LEAVES
+                    - OB
+                    - OVERTIME
+                based_on:
+                  type: string
+                  enum:
+                    - SCHEDULE
+                    - CALENDAR
+              required:
+                - code
+                - description
+                - filing_period_type
+                - category
+                - based_on
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'RequestType update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

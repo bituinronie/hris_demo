@@ -1,0 +1,29 @@
+{
+    "modelName": "Remark",
+    "tableName": "remarks",
+    "entity": {
+        "code": {
+            "definition": "string",
+            "additionalValidation": "unique:remarks",
+            "additionalDefinition": ["unique"]
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Remark",
+    "controllerLocation": "History",
+    "routePrefix": "remark",
+    "apiVersion": "0.1.14"
+}

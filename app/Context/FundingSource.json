@@ -1,0 +1,29 @@
+{
+    "modelName": "FundingSource",
+    "tableName": "funding_sources",
+    "entity": {
+        "code": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "description": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Funding Source",
+    "controllerLocation": "History",
+    "routePrefix": "funding-source",
+    "apiVersion": "0.2.15"
+}

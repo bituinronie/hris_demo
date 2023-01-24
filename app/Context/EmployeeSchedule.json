@@ -1,0 +1,34 @@
+{
+    "modelName": "EmployeeSchedule",
+    "tableName": "employee_schedules",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "schedule_id": {
+            "definition": "relatedTo:schedules",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "effective_date": {
+            "definition": "date",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "asignTo:employees",
+    "logName": "Employee Schedule",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "employee/schedule",
+    "apiVersion": "0.2.3"
+}

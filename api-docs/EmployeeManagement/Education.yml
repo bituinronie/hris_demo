@@ -1,0 +1,656 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Education'
+  version: 0.1.4
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: education
+    description: 'Everything about Education API'
+paths:
+  /employee/education/create/{employeeId}:
+    post:
+      summary: 'create record'
+      tags:
+        - education
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: string
+                  enum:
+                    - ELEMENTARY
+                    - SECONDARY
+                    - VOCATIONAL
+                    - COLLEGE
+                    - 'GRADUATE STUDIES'
+                school_name:
+                  type: string
+                course:
+                  type: string
+                attended_from:
+                  type: year
+                attended_to:
+                  type: year
+                graduated:
+                  type: boolean
+                highest_level:
+                  type: string
+                year_graduated:
+                  type: year
+                honors:
+                  type: string
+              required:
+                - level
+                - school_name
+                - attended_from
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+      responses:
+        '"201"':
+          description: 'Education created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee/education successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/search/{employeeId}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: level
+          schema:
+            type: string
+            enum:
+              - ELEMENTARY
+              - SECONDARY
+              - VOCATIONAL
+              - COLLEGE
+              - 'GRADUATE STUDIES'
+          description: 'filter level'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Education records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    level: enum
+                    school_name: string
+                    course: string
+                    attended_from: year
+                    attended_to: year
+                    graduated: boolean
+                    highest_level: string
+                    year_graduated: year
+                    honors: string
+                    created_at: '2021-01-08 16:31:31'
+                    updated_at: '2021-01-08 16:31:31'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    level: enum
+                    school_name: string
+                    course: string
+                    attended_from: year
+                    attended_to: year
+                    graduated: boolean
+                    highest_level: string
+                    year_graduated: year
+                    honors: string
+                    created_at: '2021-01-08 16:31:31'
+                    updated_at: '2021-01-08 16:31:31'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/parameter/':
+    get:
+      summary: 'get parameter'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - education
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: string
+                  enum:
+                    - ELEMENTARY
+                    - SECONDARY
+                    - VOCATIONAL
+                    - COLLEGE
+                    - 'GRADUATE STUDIES'
+                school_name:
+                  type: string
+                course:
+                  type: string
+                attended_from:
+                  type: year
+                attended_to:
+                  type: year
+                graduated:
+                  type: boolean
+                highest_level:
+                  type: string
+                year_graduated:
+                  type: year
+                honors:
+                  type: string
+              required:
+                - level
+                - school_name
+                - attended_from
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Education update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Education delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/education/portal/create:
+    post:
+      summary: 'create portal record'
+      tags:
+        - education
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: string
+                  enum:
+                    - ELEMENTARY
+                    - SECONDARY
+                    - VOCATIONAL
+                    - COLLEGE
+                    - 'GRADUATE STUDIES'
+                school_name:
+                  type: string
+                course:
+                  type: string
+                attended_from:
+                  type: year
+                attended_to:
+                  type: year
+                graduated:
+                  type: boolean
+                highest_level:
+                  type: string
+                year_graduated:
+                  type: year
+                honors:
+                  type: string
+              required:
+                - level
+                - school_name
+                - attended_from
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Education create message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/education/portal/search/{id}:
+    get:
+      summary: 'get portal record'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: level
+          schema:
+            type: string
+            enum:
+              - ELEMENTARY
+              - SECONDARY
+              - VOCATIONAL
+              - COLLEGE
+              - 'GRADUATE STUDIES'
+          description: 'filter level'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return Education records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    level: enum
+                    school_name: string
+                    course: string
+                    attended_from: year
+                    attended_to: year
+                    graduated: boolean
+                    highest_level: string
+                    year_graduated: year
+                    honors: string
+                    created_at: '2021-01-08 16:31:31'
+                    updated_at: '2021-01-08 16:31:31'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    level: enum
+                    school_name: string
+                    course: string
+                    attended_from: year
+                    attended_to: year
+                    graduated: boolean
+                    highest_level: string
+                    year_graduated: year
+                    honors: string
+                    created_at: '2021-01-08 16:31:31'
+                    updated_at: '2021-01-08 16:31:31'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/portal/parameter/':
+    get:
+      summary: 'get portal parameter'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/education/portal/update/{id}:
+    put:
+      summary: 'update portal record'
+      tags:
+        - education
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: string
+                  enum:
+                    - ELEMENTARY
+                    - SECONDARY
+                    - VOCATIONAL
+                    - COLLEGE
+                    - 'GRADUATE STUDIES'
+                school_name:
+                  type: string
+                course:
+                  type: string
+                attended_from:
+                  type: year
+                attended_to:
+                  type: year
+                graduated:
+                  type: boolean
+                highest_level:
+                  type: string
+                year_graduated:
+                  type: year
+                honors:
+                  type: string
+              required:
+                - level
+                - school_name
+                - attended_from
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Education update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/education/portal/delete/{id}':
+    delete:
+      summary: 'delete portal record'
+      tags:
+        - education
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Education delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

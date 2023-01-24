@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: Authentication API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: auth
+    description: Everything about Authentication
+
+paths:
+  /auth/login/:
+    post:
+      summary: get bearer token
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "access_token": "<bearer token>"
+                  "token_type": "bearer"
+                  "expires_in": 3600
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /auth/logout/:
+    post:
+      summary: logout bearer token
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "204":
+          description: bearer token successfully logout
+          content: null
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /auth/refresh/:
+    post:
+      summary: refresh bearer token
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: refresh bearer token
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "access_token": "<bearer token>"
+                  "token_type": "bearer"
+                  "expires_in": 3600
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /auth:
+    get:
+      summary: check bearer token
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: get user info
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "username": "<username>"
+                  "email": "<email>"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /auth/change-password:
+    put:
+      summary: change password
+      tags:
+        - auth
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                new_password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+                - old_password
+                - new_password
+                - new_password_confirmation
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: success message
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "message": "change password successful"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,308 @@
+openapi: 3.0.0
+info:
+  title: Token API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: token
+    description: Everything about Token API
+
+paths:
+  /token/generate/:
+    post:
+      summary: generate token
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permission:
+                  type: string
+                model_name:
+                  type: array
+              required:
+                - permission
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: generating token
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  "message": "<token>"
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/check/{token}:
+    get:
+      summary: check token
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: token to check
+      responses:
+        "204":
+          description: token is valid
+          content: null
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/report/parameter/{employeeId}:
+    get:
+      summary: get report parameter
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id to generate parameter
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/service-record/parameter/{employeeId}:
+    get:
+      summary: get service record parameter
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id to generate parameter
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/employees/parameter:
+    get:
+      summary: get employees parameter
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /token/employees/report-parameter:
+    get:
+      summary: get report plain parameter
+      tags:
+        - token
+      security:
+        - bearerAuth: []
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return paramters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        "400":
+          description: token unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Token unauthorized
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

@@ -1,0 +1,49 @@
+{
+    "modelName": "EmployeeTraining",
+    "tableName": "employee_trainings",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "training_id": {
+            "definition": "relatedTo:trainings",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "date_from": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_to": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "number_of_hours": {
+            "definition": "integer",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "show_pds": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Employee Training",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee/training",
+    "apiVersion": "0.1.8"
+}

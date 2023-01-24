@@ -1,0 +1,54 @@
+{
+    "modelName": "Eligibility",
+    "tableName": "eligibilities",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "type": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "rating": {
+            "definition": "double:5,2",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_conferment": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "place_conferment": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "license_number": {
+            "definition": "string:50",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "license_validity": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Eligibility",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee/eligibility",
+    "apiVersion": "0.1.5"
+}

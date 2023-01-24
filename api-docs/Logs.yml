@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Activity Logs API
+  version: 0.0.1
+servers:
+  - url: http://localhost:8088/api/
+    description: Local
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    codxio:
+      summary: Username and Password for development
+      value:
+        username: codx.io.dev
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: logs
+    description: Everything about Activity Log's
+
+paths:
+  /logs/search/:
+    get:
+      summary: get activity logs lists
+      tags:
+        - logs
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+        - in: query
+          name: modelName
+          schema:
+            type: string
+          description: search by model
+        - in: query
+          name: from
+          schema:
+            type: string
+          description: (date) sort by from and to
+        - in: query
+          name: to
+          schema:
+            type: string
+          description: (date) sort by from and to
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        - in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        "200":
+          description: listing activity logs
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  - "id": 1
+                    "action" : "user created."
+                    "causeBy" : "codx.io.dev"
+                    "causeOn" : "2020-12-21" 
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /logs/parameter/:
+    get:
+      summary: get activity logs parameter
+      tags:
+        - logs
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/acceptsJson"
+      responses:
+        "200":
+          description: listing activity logs parameter
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  modelName : ['Sample', 'User']
+        "401":
+          description: Bearer token not authorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

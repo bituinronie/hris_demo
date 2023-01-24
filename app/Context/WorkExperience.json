@@ -1,0 +1,69 @@
+{
+    "modelName": "WorkExperience",
+    "tableName": "work_experiences",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "position": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_from": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "date_to": {
+            "definition": "string:15",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "company": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "salary": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "pay_grade": {
+            "definition": "string:50",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "status_of_appointment": {
+            "definition": "string:200",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sector": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_government_service": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": true,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": false,
+    "logSetting": "assignTo:employees",
+    "logName": "Work Experience",
+    "controllerLocation": "EmployeeManagement",
+    "routePrefix": "employee/work-experience",
+    "apiVersion": "0.1.6"
+}

@@ -1,0 +1,638 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - WorkExperience'
+  version: 0.1.6
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: workexperience
+    description: 'Everything about WorkExperience API'
+paths:
+  /employee/work-experience/create/{employeeId}:
+    post:
+      summary: 'create record'
+      tags:
+        - workexperience
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                company:
+                  type: string
+                salary:
+                  type: string
+                pay_grade:
+                  type: string
+                status_of_appointment:
+                  type: string
+                sector:
+                  type: string
+                is_government_service:
+                  type: bolean
+              required:
+                - employee_id
+                - position
+                - date_from
+                - company
+                - salary
+                - pay_grade
+                - is_government_service
+      security:
+        -
+          bearerAuth: {  }
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'WorkExperience created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee/work-experience successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/work-experience/search/{employeeId}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: is_government_service
+          schema:
+            type: boolean
+          description: 'filter government service'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return WorkExperience records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    position: string
+                    date_from: string
+                    date_to: string
+                    company: string
+                    salary: string
+                    pay_grade: string
+                    status_of_appointment: string
+                    sector: string
+                    is_government_service: bolean
+                    created_at: '2021-01-08 22:44:33'
+                    updated_at: '2021-01-08 22:44:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    position: string
+                    date_from: string
+                    date_to: string
+                    company: string
+                    salary: string
+                    pay_grade: string
+                    status_of_appointment: string
+                    sector: string
+                    is_government_service: bolean
+                    created_at: '2021-01-08 22:44:33'
+                    updated_at: '2021-01-08 22:44:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/work-experience/parameter/':
+    get:
+      summary: 'get paramter'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/work-experience/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - workexperience
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_id:
+                  type: integer
+                position:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                company:
+                  type: string
+                salary:
+                  type: string
+                pay_grade:
+                  type: string
+                status_of_appointment:
+                  type: string
+                sector:
+                  type: string
+                is_government_service:
+                  type: bolean
+              required:
+                - employee_id
+                - position
+                - date_from
+                - company
+                - salary
+                - pay_grade
+                - is_government_service
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'WorkExperience update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/work-experience/delete/{id}':
+    delete:
+      summary: 'delete record'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'WorkExperience update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/work-experience/portal/search/{id}:
+    get:
+      summary: 'get portal record'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: is_government_service
+          schema:
+            type: boolean
+          description: 'filter government service'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return WorkExperience records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    position: string
+                    date_from: string
+                    date_to: string
+                    company: string
+                    salary: string
+                    pay_grade: string
+                    status_of_appointment: string
+                    sector: string
+                    is_government_service: bolean
+                    created_at: '2021-01-08 22:44:33'
+                    updated_at: '2021-01-08 22:44:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    position: string
+                    date_from: string
+                    date_to: string
+                    company: string
+                    salary: string
+                    pay_grade: string
+                    status_of_appointment: string
+                    sector: string
+                    is_government_service: bolean
+                    created_at: '2021-01-08 22:44:33'
+                    updated_at: '2021-01-08 22:44:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/work-experience/portal/create:
+    post:
+      summary: 'create portal record'
+      tags:
+        - workexperience
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                company:
+                  type: string
+                salary:
+                  type: string
+                pay_grade:
+                  type: string
+                status_of_appointment:
+                  type: string
+                sector:
+                  type: string
+                is_government_service:
+                  type: bolean
+              required:
+                - employee_id
+                - position
+                - date_from
+                - company
+                - salary
+                - pay_grade
+                - is_government_service
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"201"':
+          description: 'WorkExperience created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'employee/work-experience successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/employee/work-experience/portal/parameter/':
+    get:
+      summary: 'get portal paramter'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+      responses:
+        '"200"':
+          description: 'return parameters'
+          content:
+            application/json:
+              schema:
+                type: array
+                example: ['sample' : []]
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/work-experience/portal/update/{id}:
+    put:
+      summary: 'update portal record'
+      tags:
+        - workexperience
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                company:
+                  type: string
+                salary:
+                  type: string
+                pay_grade:
+                  type: string
+                status_of_appointment:
+                  type: string
+                sector:
+                  type: string
+                is_government_service:
+                  type: bolean
+              required:
+                - employee_id
+                - position
+                - date_from
+                - company
+                - salary
+                - pay_grade
+                - is_government_service
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: primary key
+      responses:
+        '"204"':
+          description: 'WorkExperience update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /employee/work-experience/portal/delete/{id}:
+    delete:
+      summary: 'delete portal record'
+      tags:
+        - workexperience
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: primary key
+      responses:
+        '"204"':
+          description: 'WorkExperience delete message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

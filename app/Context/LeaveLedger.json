@@ -1,0 +1,89 @@
+{
+    "modelName": "LeaveLedger",
+    "tableName": "leave_ledgers",
+    "entity": {
+        "employee_id": {
+            "definition": "relatedTo:employees",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "from": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "to": {
+            "definition": "timestamp",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "request_type_id": {
+            "definition": "relatedTo:request_types",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "credit": {
+            "definition": "double:6,3",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "ot_json": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "status": {
+            "definition": "integer:10",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "reason": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "proof_type": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "ob_venue": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_paid": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "remarks": {
+            "definition": "string",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "is_start": {
+            "definition": "boolean",
+            "additionalValidation": "",
+            "additionalDefinition": ["default:false"]
+        },
+        "approverStatus": {
+            "definition": "array",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": true,
+        "update": false,
+        "create": true,
+        "delete": true
+    },
+    "hasDelete": false,
+    "isSoftDelete": false,
+    "logSetting": "default",
+    "logName": "Leave Ledger",
+    "controllerLocation": "SelfService",
+    "routePrefix": "leave-ledger",
+    "apiVersion": "0.4.3"
+}

@@ -1,0 +1,762 @@
+openapi: 3.0.0
+info:
+  title: 'HRIS Payroll API - Dtr'
+  version: 0.2.4
+servers:
+  -
+    url: 'http://localhost:8088/api/'
+    description: URI
+components:
+  parameters:
+    acceptsJson:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        example: application/json
+        default: application/json
+  examples:
+    dummyuser:
+      summary: 'Dummy username and password'
+      value:
+        username: dummyuser
+        password: secret
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  -
+    name: dtr
+    description: 'Everything about Dtr API'
+paths:
+  /cron/dtr/generate/{employeeId}:
+    post:
+      summary: 'cron generate monthly dtr'
+      tags:
+        - dtr
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                month:
+                  type: integer
+                year:
+                  type: integer
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee id'
+      responses:
+        '"201"':
+          description: 'Dtr created message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'dtr successfully created.'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/search/{employeeId}/{id}':
+    get:
+      summary: 'get record'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee Id'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'required dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'required dateFrom'
+        -
+          in: query
+          name: month
+          schema:
+            type: integer
+          description: for month sort
+        -
+          in: query
+          name: year
+          schema:
+            type: integer
+          description: for year sort
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/stats/{employeeId}':
+    get:
+      summary: 'get stats'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: 'Employee Id'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'required dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'required dateFrom'
+        -
+          in: query
+          name: month
+          schema:
+            type: integer
+          description: for month sort
+        -
+          in: query
+          name: year
+          schema:
+            type: integer
+          description: for year sort
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/weekly/{employeeId}/{id}':
+    get:
+      summary: 'get weekly record'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: true
+          schema:
+            type: integer
+          description: 'Employee Id'
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/search':
+    get:
+      summary: 'get employees list'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: path
+          name: employeeId
+          required: false
+          schema:
+            type: integer
+          description: employee id
+        -
+          in: query
+          name: searchValue
+          schema:
+            type: string
+          description: 'search value'
+        -
+          in: query
+          name: page
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: perPage
+          schema:
+            type: integer
+          description: 'for pagination'
+        -
+          in: query
+          name: field
+          schema:
+            type: string
+          description: 'for sorting'
+        -
+          in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+          description: 'for sorting'
+      responses:
+        '"200"':
+          description: 'return ServiceRecord records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    first_name: sample
+                    last_name: sample
+                    middle_name: sample
+                  
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/time-log/{id}':
+    get:
+      summary: 'get time log'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"200"':
+          description: 'return time log'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    first_name: sample
+                    last_name: sample
+                    middle_name: sample
+                  
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/update/{id}':
+    put:
+      summary: 'update record'
+      tags:
+        - dtr
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time_in:
+                  type: timestamp
+                lunch_out:
+                  type: timestamp
+                lunch_in:
+                  type: timestamp
+                time_out:
+                  type: timestamp
+                reason:
+                  type: string
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"204"':
+          description: 'Dtr update message'
+          content: null
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /dtr/portal/search/{id}:
+    get:
+      summary: 'get portal record'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'required dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'required dateFrom'
+        -
+          in: query
+          name: month
+          schema:
+            type: integer
+          description: for month sort
+        -
+          in: query
+          name: year
+          schema:
+            type: integer
+          description: for year sort
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/portal/stats/':
+    get:
+      summary: 'get portal stats'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: query
+          name: dateFrom
+          schema:
+            type: date
+          description: 'required dateTo'
+        -
+          in: query
+          name: dateTo
+          schema:
+            type: date
+          description: 'required dateFrom'
+        -
+          in: query
+          name: month
+          schema:
+            type: integer
+          description: for month sort
+        -
+          in: query
+          name: year
+          schema:
+            type: integer
+          description: for year sort
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/portal/weekly/{id}':
+    get:
+      summary: 'get portal weekly record'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"200"':
+          description: 'return Dtr records'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+                  -
+                    id: 1
+                    employee_id: relatedTo
+                    ref_date: date
+                    time_in: timestamp
+                    lunch_out: timestamp
+                    lunch_in: timestamp
+                    time_out: timestamp
+                    reason: string
+                    created_at: '2021-02-02 16:11:33'
+                    updated_at: '2021-02-02 16:11:33'
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  '/dtr/portal/time-log/{id}':
+    get:
+      summary: 'get portal time log'
+      tags:
+        - dtr
+      security:
+        -
+          bearerAuth: {  }
+      parameters:
+        -
+          $ref: '#/components/parameters/acceptsJson'
+        -
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: 'primary key'
+      responses:
+        '"200"':
+          description: 'return time log'
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                  -
+                    id: 1
+                    first_name: sample
+                    last_name: sample
+                    middle_name: sample
+                  
+        '"401"':
+          description: 'Bearer token not authorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated

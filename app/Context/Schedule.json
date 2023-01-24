@@ -1,0 +1,179 @@
+{
+    "modelName": "Schedule",
+    "tableName": "schedules",
+    "entity": {
+        "code": {
+            "definition": "string:50",
+            "additionalValidation": "",
+            "additionalDefinition": ["unique"]
+        },
+        "description": {
+            "definition": "string:150",
+            "additionalValidation": "",
+            "additionalDefinition": []
+        },
+        "mon_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mon_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mon_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "mon_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "tue_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "tue_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "tue_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "tue_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "wed_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "wed_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "wed_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "wed_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "thu_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "thu_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "thu_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "thu_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "fri_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "fri_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "fri_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "fri_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sat_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sat_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sat_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sat_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sun_time_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sun_break_in": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sun_break_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "sun_time_out": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "flexi_from": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        },
+        "flexi_to": {
+            "definition": "time",
+            "additionalValidation": "",
+            "additionalDefinition": ["nullable"]
+        }
+    },
+    "portalAccess": {
+        "search": false,
+        "update": false,
+        "create": false,
+        "delete": false
+    },
+    "hasDelete": true,
+    "isSoftDelete": true,
+    "logSetting": "default",
+    "logName": "Schedule",
+    "controllerLocation": "TimeKeeping",
+    "routePrefix": "schedule",
+    "apiVersion": "0.2.1"
+}
